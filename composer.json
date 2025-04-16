@@ -1,0 +1,14 @@
+{
+  "name": "clubdeuce/schema-php",
+  "description": "A PHP library for Schema.org",
+  "type": "library",
+  "require-dev": {
+    "phpunit/phpunit": "^12.1"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Clubdeuce\\Schema\\": "src/"
+    }
+  }
+}
