@@ -1,4 +1,5 @@
 <?php
+
 namespace Clubdeuce\Schema;
 
 /**
@@ -10,12 +11,13 @@ namespace Clubdeuce\Schema;
  * @method string image_url()
  * @method string name()
  * @method string url()
- * @method void   set_description( string $description )
- * @method void   set_name( string $name )
- * @method void   set_url( string $url )
- * @method void   set_image_url ( string $url )
+ * @method void   set_description(string $description)
+ * @method void   set_name(string $name)
+ * @method void   set_url(string $url)
+ * @method void   set_image_url (string $url)
  */
-class Base {
+class Base
+{
 
     /**
      * @var string
@@ -42,88 +44,83 @@ class Base {
      */
     protected string $_url = '';
 
+    /**
+     *
+     */
+    public function ldJson(): string
+    {
+        if ($schema = $this->schema()) {
+            return sprintf('<script type="application/ld+json">%1$s</script>', json_encode(array_filter($schema)));
+        }
+
+        return '';
+    }
 
     /**
      * @return string[]
      */
-    public function schema() : array {
-
-        $schema = array_filter( array(
-            '@context'    => 'https://schema.org',
-            '@type'       => 'Thing',
+    public function schema(): array
+    {
+        $schema = array_filter(array(
+            '@context' => 'https://schema.org',
+            '@type' => 'Thing',
             'description' => $this->description(),
-            'image'       => $this->image_url(),
-            'name'        => $this->name(),
-            'url'         => $this->url(),
-        ) );
+            'image' => $this->image_url(),
+            'name' => $this->name(),
+            'url' => $this->url(),
+        ));
 
         return $schema;
-
-    }
-
-    /**
-     *
-     */
-    public function the_ld_json() : void {
-
-        if ( $schema = $this->schema() ) {
-            printf( '<script type="application/ld+json">%1$s</script>', json_encode( array_filter ( $schema ) ) );
-        }
-
     }
 
     /**
      * @param string $method
-     * @param array  $args
+     * @param array $args
      *
      * @return mixed|null
      */
-    public function __call( $method, $args = array() ) {
+    public function __call(string $method, array $args = array())
+    {
 
-        if ( preg_match( '#^set_(.*?)$#', $method, $matches ) ) {
-            if( property_exists( $this, $property = "_{$matches[1]}" ) ) {
+        if (preg_match('#^set_(.*?)$#', $method, $matches)) {
+            if (property_exists($this, $property = "_{$matches[1]}")) {
                 $this->{$property} = $args[0];
-                $value = $args[0];
+                return $args[0];
             }
         }
 
-        if ( preg_match( '#^add_(.*?)$#', $method, $matches ) ) {
-            if ( property_exists( $this, $property = "_{$matches[1]}" ) ) {
-                if ( is_array( $this->{$property} ) ) {
-                    foreach( $args as $param ) {
-                        array_push( $this->{$property}, $param );
+        if (preg_match('#^add(.*?)$#', $method, $matches)) {
+            $property = '_' . lcfirst($matches[1]);
+            if (property_exists($this, $property)) {
+                if (is_array($this->{$property})) {
+                    foreach ($args as $param) {
+                        $this->{$property}[] = $param;
                     }
-                    $value = count( $this->{$property} );
+                    return count($this->{$property});
                 }
 
-                if ( ! is_array( $this->{$property} ) ) {
-                    $value = null;
-                    trigger_error( sprintf( 'The %1$s method expects %4$s::%2$s to be an array, while it is %3$s', $method, $property, gettype( $args ), __CLASS__ ) );
-                }
+                trigger_error(sprintf('The %1$s method expects %4$s::%2$s to be an array, while it is %3$s', $method, $property, gettype($args), __CLASS__));
+                return null;
             }
         }
 
-        if ( ! isset( $property ) ) {
+        if (!isset($property)) {
             $property = "_{$method}";
         }
 
-        if ( property_exists( $this, $property ) ) {
-            $value = $this->{$property};
+        if (property_exists($this, $property)) {
+            return $this->{$property};
         }
 
-        if ( ! property_exists( $this, $property ) ) {
-            $value = null;
-            trigger_error( sprintf( 'There is no property named %1$s in %2$s.', $property, __CLASS__ ) );
-        }
-
-        return $value;
-
+        trigger_error(sprintf('There is no property named %1$s in %2$s.', $property, __CLASS__));
+        return '';
     }
 
-    protected function _set_state(array $args = []) {
-        foreach($args as $key => $value) {
+    protected function _set_state(array $args = [])
+    {
+        foreach ($args as $key => $value) {
             $name = "_{$key}";
-            if(property_exists($this, $name)) {
+            if (property_exists($this, $name)) {
                 $this->{$name} = $value;
                 continue;
             }
