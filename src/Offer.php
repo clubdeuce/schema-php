@@ -16,7 +16,7 @@ class Offer extends Base
     /**
      * @link https://schema.org/price
      */
-    function setPrice(float $price): void
+    public function setPrice(float $price): void
     {
         $this->_price = $price;
     }
@@ -24,12 +24,12 @@ class Offer extends Base
     /**
      * @link https://schema.org/priceCurrency
      */
-    function setPriceCurrency(string $currency): void
+    public function setPriceCurrency(string $currency): void
     {
         $this->_priceCurrency = $currency;
     }
 
-    function schema(): array
+    public function schema(): array
     {
         $schema = array(
             '@type'         => 'Offer',
