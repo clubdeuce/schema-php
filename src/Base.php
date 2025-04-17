@@ -89,7 +89,7 @@ class Base
             }
         }
 
-        if (preg_match('#^add(.*?)$#', $method, $matches)) {
+        if (preg_match('#^add([A-Z].*?)$#', $method, $matches)) {
             $property = '_' . lcfirst($matches[1]);
             if (property_exists($this, $property)) {
                 if (is_array($this->{$property})) {
