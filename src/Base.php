@@ -113,7 +113,7 @@ class Base
         }
 
         trigger_error(sprintf('There is no property named %1$s in %2$s.', $property, __CLASS__));
-        return '';
+        return null;
     }
 
     protected function _set_state(array $args = [])
