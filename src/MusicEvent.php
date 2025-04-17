@@ -5,7 +5,7 @@ namespace Clubdeuce\Schema;
 use DateInterval;
 use DateTime;
 
-class MusicEvent extends Base
+class MusicEvent extends Thing
 {
     /**
      * @var Person[]
@@ -119,7 +119,7 @@ class MusicEvent extends Base
         if (property_exists($this, $propertyName)) {
             foreach ($this->{$propertyName} as $item) {
                 /**
-                 * @var Base $item
+                 * @var Thing $item
                  */
                 $schema[] = $item->schema();
             }

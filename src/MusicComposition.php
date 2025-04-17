@@ -12,12 +12,12 @@ namespace Clubdeuce\Schema;
  *
  * @link https://schema.org/MusicComposition
  */
-class MusicComposition extends Base
+class MusicComposition extends Thing
 {
     protected Person $_composer;
 
     /**
-     * The musical form, e.g. sonata, symphony, overture, etc.
+     * The musical form, e.g., sonata, symphony, overture, etc.
      */
     protected string $_form = '';
 

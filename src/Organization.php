@@ -10,7 +10,7 @@ namespace Clubdeuce\Schema;
  * @method PostalAddress|null address()
  * @method string             telephone()
  */
-class Organization extends Base
+class Organization extends Thing
 {
     protected ?PostalAddress $_address = null;
     protected string $_telephone = '';

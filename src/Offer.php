@@ -7,7 +7,7 @@ namespace Clubdeuce\Schema;
  *
  * @link https://schema.org/Offer
  */
-class Offer extends Base
+class Offer extends Thing
 {
     protected float $_price = 0;
 

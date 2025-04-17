@@ -5,7 +5,7 @@ namespace Clubdeuce\Schema;
 /**
  * @link https://schema.org/Place
  */
-class Place extends Base
+class Place extends Thing
 {
     protected PostalAddress $_address;
 

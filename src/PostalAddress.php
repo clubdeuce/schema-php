@@ -8,7 +8,7 @@ namespace Clubdeuce\Schema;
  *
  * @link https://schema.org/PostalAddress
  */
-class PostalAddress extends Base
+class PostalAddress extends Thing
 {
     protected string $_addressCountry = '';
 

@@ -1,15 +1,15 @@
 <?php
 namespace Clubdeuce\Schema\tests\unit;
 
-use Clubdeuce\Schema\Base;
+use Clubdeuce\Schema\Thing;
 use Clubdeuce\Schema\Tests\testCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(Base::class)]
-class BaseTest extends testCase
+#[CoversClass(Thing::class)]
+class ThingTest extends testCase
 {
     public function testSchema() {
-        $base = new Base();
+        $base = new Thing();
         $schema = $base->schema();
 
         $this->assertIsArray($schema);

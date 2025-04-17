@@ -4,7 +4,7 @@ namespace Clubdeuce\Schema;
 /**
  * @link https://schema.org/Person
  */
-class Person extends Base {
+class Person extends Thing {
     /**
      * @return array
      */

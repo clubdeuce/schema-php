@@ -16,7 +16,7 @@ namespace Clubdeuce\Schema;
  * @method void   set_url(string $url)
  * @method void   set_image_url (string $url)
  */
-class Base
+class Thing
 {
 
     /**
