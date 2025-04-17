@@ -76,7 +76,7 @@ class MusicEvent extends Base
 
     public function setDoorTime(DateTime $doorTime): void
     {
-        $this->door_time = $doorTime;
+        $this->_doorTime = $doorTime;
     }
 
     /**
@@ -152,7 +152,7 @@ class MusicEvent extends Base
     {
 
         if (!isset($this->_endDate)) {
-            if (isset($this->_duration)) {
+            if (isset($this->_duration) && !is_null($this->_startDate)) {
                 $this->_endDate = (clone $this->_startDate)->add($this->_duration);
             }
         }
