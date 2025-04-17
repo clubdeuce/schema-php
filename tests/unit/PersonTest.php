@@ -2,10 +2,11 @@
 namespace Clubdeuce\Schema\tests\unit;
 
 use Clubdeuce\Schema\Person;
+use Clubdeuce\Schema\Tests\testCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(Person::class)]
-class PersonTest extends BaseTest
+class PersonTest extends testCase
 {
     public function testSchema()
     {
