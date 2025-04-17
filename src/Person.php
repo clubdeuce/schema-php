@@ -8,7 +8,7 @@ class Person extends Base {
     /**
      * @return array
      */
-    function schema() : array {
+    public function schema() : array {
 
         $schema = array_merge( parent::schema(), array(
             '@type' => 'Person',
