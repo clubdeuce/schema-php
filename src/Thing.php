@@ -44,6 +44,11 @@ class Thing
      */
     protected string $_url = '';
 
+    public function __construct(array $args = [])
+    {
+        $this->_set_state($args);
+    }
+
     /**
      *
      */
