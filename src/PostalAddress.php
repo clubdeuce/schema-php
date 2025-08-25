@@ -33,7 +33,7 @@ class PostalAddress extends Thing
             'addressCountry'  => $this->_addressCountry,
             'addressLocality' => $this->_addressLocality,
             'addressRegion'   => $this->_addressRegion,
-            'name'            => $this->_name,
+            'name'            => $this->name,
             'postalCode'      => $this->_postalCode,
             'streetAddress'   => $this->_streetAddress,
         );

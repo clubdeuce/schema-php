@@ -9,12 +9,12 @@ namespace Clubdeuce\Schema;
  */
 class Thing
 {
-    protected string $_description = '';
-    protected array $_extra_args = array();
+    protected string $description = '';
+    protected array $extra_args = array();
 
-    protected string $_image_url = '';
-    protected string $_name = '';
-    protected string $_url = '';
+    protected string $image_url = '';
+    protected string $name = '';
+    protected string $url = '';
 
     public function __construct(array $args = [])
     {
@@ -23,17 +23,17 @@ class Thing
 
     public function description(): string
     {
-        return $this->_description;
+        return $this->description;
     }
 
     public function set_description(string $description): void
     {
-        $this->_description = $description;
+        $this->description = $description;
     }
 
     public function image_url(): string
     {
-        return $this->_image_url;
+        return $this->image_url;
     }
 
     /**
@@ -41,7 +41,7 @@ class Thing
      */
     public function set_image_url(string $url): void
     {
-        $this->_image_url = $url;
+        $this->image_url = $url;
     }
 
     /**
@@ -49,7 +49,7 @@ class Thing
      */
     public function name(): string
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -57,17 +57,17 @@ class Thing
      */
     public function set_name(string $name): void
     {
-        $this->_name = $name;
+        $this->name = $name;
     }
 
     public function url(): string
     {
-        return $this->_url;
+        return $this->url;
     }
 
     public function set_url(string $url): void
     {
-        $this->_url = $url;
+        $this->url = $url;
     }
 
     /**
@@ -153,7 +153,7 @@ class Thing
                 continue;
             }
 
-            $this->_extra_args[$key] = $value;
+            $this->extra_args[$key] = $value;
         }
     }
 }
