@@ -6,47 +6,68 @@ namespace Clubdeuce\Schema;
  * Class Base
  *
  * @link https://schema.org/Thing
- *
- * @method string description()
- * @method string image_url()
- * @method string name()
- * @method string url()
- * @method void   set_description(string $description)
- * @method void   set_name(string $name)
- * @method void   set_url(string $url)
- * @method void   set_image_url (string $url)
  */
 class Thing
 {
-
-    /**
-     * @var string
-     */
     protected string $_description = '';
-
-    /**
-     * @var array
-     */
     protected array $_extra_args = array();
 
-    /**
-     * @var string
-     */
     protected string $_image_url = '';
-
-    /**
-     * @var string
-     */
     protected string $_name = '';
-
-    /**
-     * @var string
-     */
     protected string $_url = '';
 
     public function __construct(array $args = [])
     {
         $this->_set_state($args);
+    }
+
+    public function description(): string
+    {
+        return $this->_description;
+    }
+
+    public function set_description(string $description): void
+    {
+        $this->_description = $description;
+    }
+
+    public function image_url(): string
+    {
+        return $this->_image_url;
+    }
+
+    /**
+     * Set the image URL
+     */
+    public function set_image_url(string $url): void
+    {
+        $this->_image_url = $url;
+    }
+
+    /**
+     * Get the name
+     */
+    public function name(): string
+    {
+        return $this->_name;
+    }
+
+    /**
+     * Set the name
+     */
+    public function set_name(string $name): void
+    {
+        $this->_name = $name;
+    }
+
+    public function url(): string
+    {
+        return $this->_url;
+    }
+
+    public function set_url(string $url): void
+    {
+        $this->_url = $url;
     }
 
     /**
@@ -86,6 +107,8 @@ class Thing
      */
     public function __call(string $method, array $args = array())
     {
+
+        trigger_error(sprintf('Magic methods are decrecated: %1$s %2$s', $method, __CLASS__));
 
         if (preg_match('#^set_(.*?)$#', $method, $matches)) {
             if (property_exists($this, $property = "_{$matches[1]}")) {
