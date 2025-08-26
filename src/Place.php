@@ -7,13 +7,22 @@ namespace Clubdeuce\Schema;
  */
 class Place extends Thing
 {
-    protected PostalAddress $_address;
+    protected PostalAddress|null $address = null;
+
+    public function __construct(array $args = [])
+    {
+        if(isset($args['address']) && is_array($args['address'])) {
+            $args['address'] = new PostalAddress($args['address']);
+        }
+
+        parent::__construct($args);
+    }
 
     public function schema(): array
     {
         $schema = array_merge(parent::schema(), array(
             '@type' => 'Place',
-            'address' => $this->_address?->schema(),
+            'address' => $this->address?->schema(),
         ));
 
         return array_filter($schema);
@@ -21,6 +30,11 @@ class Place extends Thing
 
     public function setAddress(PostalAddress $address): void
     {
-        $this->_address = $address;
+        $this->address = $address;
+    }
+
+    public function address(): PostalAddress
+    {
+        return $this->address;
     }
 }

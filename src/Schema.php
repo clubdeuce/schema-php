@@ -3,11 +3,6 @@ namespace Clubdeuce\Schema;
 
 class Schema
 {
-    public function makePerson(array $data  = []): Person
-    {
-        return new Person($data);
-    }
-
     public function makeMusicComposition(array $data = []): MusicComposition
     {
         return new MusicComposition($data);
@@ -26,5 +21,15 @@ class Schema
     public function makeOrganization(array $data = []): Organization
     {
         return new Organization($data);
+    }
+
+    public function makePerson(array $data  = []): Person
+    {
+        return new Person($data);
+    }
+
+    public function makePlace(array $data = []): Place
+    {
+        return new Place($data);
     }
 }

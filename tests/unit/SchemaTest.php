@@ -5,6 +5,7 @@ namespace Clubdeuce\Schema\tests\unit;
 use Clubdeuce\Schema\Offer;
 use Clubdeuce\Schema\Organization;
 use Clubdeuce\Schema\Person;
+use Clubdeuce\Schema\Place;
 use Clubdeuce\Schema\PostalAddress;
 use Clubdeuce\Schema\Schema;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -15,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(Person::class)]
 #[UsesClass(Offer::class)]
 #[UsesClass(Organization::class)]
+#[UsesClass(Place::class)]
 #[UsesClass(PostalAddress::class)]
 #[CoversClass(Schema::class)]
 class SchemaTest extends TestCase
@@ -127,4 +129,34 @@ class SchemaTest extends TestCase
     }
 
 
+    public function testMakePlacePassesDataToPlace()
+    {
+        $data = [
+            'name' => 'Central Park',
+            'description' => 'A large public park in New York City.',
+            'image_url' => 'http://example.com/centralpark.jpg',
+            'url' => 'http://example.com/centralpark',
+            'address' => [
+                'streetAddress' => '59th to 110th St',
+                'addressLocality' => 'New York',
+                'addressRegion' => 'NY',
+                'postalCode' => '10022',
+                'addressCountry' => 'USA'
+            ]
+        ];
+
+        $schema = new Schema();
+        $place = $schema->makePlace($data);
+
+        $this->assertEquals('Central Park', $place->name());
+        $this->assertEquals('A large public park in New York City.', $place->description());
+        $this->assertEquals('http://example.com/centralpark.jpg', $place->image_url());
+        $this->assertEquals('http://example.com/centralpark', $place->url());
+        $this->assertInstanceOf(PostalAddress::class, $place->address());
+        $this->assertEquals('59th to 110th St', $place->address()->streetAddress());
+        $this->assertEquals('New York', $place->address()->addressLocality());
+        $this->assertEquals('NY', $place->address()->addressRegion());
+        $this->assertEquals('10022', $place->address()->postalCode());
+        $this->assertEquals('USA', $place->address()->addressCountry());
+    }
 }
