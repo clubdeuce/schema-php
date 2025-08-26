@@ -22,4 +22,9 @@ class Schema
     {
         return new Offer($data);
     }
+
+    public function makeOrganization(array $data = []): Organization
+    {
+        return new Organization($data);
+    }
 }

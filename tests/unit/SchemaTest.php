@@ -3,15 +3,19 @@
 namespace Clubdeuce\Schema\tests\unit;
 
 use Clubdeuce\Schema\Offer;
+use Clubdeuce\Schema\Organization;
 use Clubdeuce\Schema\Person;
-use PHPUnit\Framework\Attributes\UsesClass;
-use PHPUnit\Framework\TestCase;
+use Clubdeuce\Schema\PostalAddress;
 use Clubdeuce\Schema\Schema;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
+use PHPUnit\Framework\TestCase;
 
 
 #[UsesClass(Person::class)]
 #[UsesClass(Offer::class)]
+#[UsesClass(Organization::class)]
+#[UsesClass(PostalAddress::class)]
 #[CoversClass(Schema::class)]
 class SchemaTest extends TestCase
 {
@@ -87,6 +91,39 @@ class SchemaTest extends TestCase
         $this->assertEquals('http://example.com/offer', $offer->url());
         $this->assertEquals(99.99, $offer->price());
         $this->assertEquals('USD', $offer->priceCurrency());
+    }
+
+    public function testMakeOrganizationPassesDataToOrganization()
+    {
+        $data = [
+            'name' => 'TechCorp',
+            'description' => 'A leading technology company',
+            'image_url' => 'http://example.com/logo.jpg',
+            'url' => 'http://example.com',
+            'telephone' => '123-456-7890',
+            'address' => [
+                'streetAddress' => '123 Tech Street',
+                'addressLocality' => 'Tech City',
+                'addressRegion' => 'Tech State',
+                'postalCode' => '12345',
+                'addressCountry' => 'Techland'
+            ]
+        ];
+
+        $schema = new Schema();
+        $organization = $schema->makeOrganization($data);
+
+        $this->assertEquals('TechCorp', $organization->name());
+        $this->assertEquals('A leading technology company', $organization->description());
+        $this->assertEquals('http://example.com/logo.jpg', $organization->image_url());
+        $this->assertEquals('http://example.com', $organization->url());
+        $this->assertEquals('123-456-7890', $organization->telephone());
+        $this->assertInstanceOf(PostalAddress::class, $organization->address());
+        $this->assertEquals('123 Tech Street', $organization->address()->streetAddress());
+        $this->assertEquals('Tech City', $organization->address()->addressLocality());
+        $this->assertEquals('Tech State', $organization->address()->addressRegion());
+        $this->assertEquals('12345', $organization->address()->postalCode());
+        $this->assertEquals('Techland', $organization->address()->addressCountry());
     }
 
 

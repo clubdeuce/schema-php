@@ -9,12 +9,21 @@ namespace Clubdeuce\Schema;
  */
 class Organization extends Thing
 {
-    protected ?PostalAddress $_address = null;
-    protected string $_telephone = '';
+    protected ?PostalAddress $address = null;
+    protected string $telephone = '';
+
+    public function __construct(array $args = [])
+    {
+        if(isset($args['address']) && is_array($args['address'])) {
+            $args['address'] = new PostalAddress($args['address']);
+        }
+
+        parent::__construct($args);
+    }
 
     public function address(): ?PostalAddress
     {
-        return $this->_address;
+        return $this->address;
     }
 
     public function schema(): array
@@ -30,6 +39,6 @@ class Organization extends Thing
 
     public function telephone(): string
     {
-        return $this->_telephone;
+        return $this->telephone;
     }
 }
