@@ -3,7 +3,7 @@ namespace Clubdeuce\Schema;
 
 class Schema
 {
-    public function make_person( array $data  = [] ): Person
+    public function makePerson(array $data  = []): Person
     {
         return new Person($data);
     }

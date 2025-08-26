@@ -22,7 +22,7 @@ class SchemaTest extends TestCase
         ];
 
         $schema = new Schema();
-        $person = $schema->make_person($data);
+        $person = $schema->makePerson($data);
 
         $this->assertEquals('John Doe', $person->name());
         $this->assertEquals('A test person', $person->description());
