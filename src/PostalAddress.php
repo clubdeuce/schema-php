@@ -67,4 +67,29 @@ class PostalAddress extends Thing
     {
         $this->_postalCode = $postalCode;
     }
+
+    public function streetAddress(): string
+    {
+        return $this->_streetAddress;
+    }
+
+    public function country(): string
+    {
+        return $this->_addressCountry;
+    }
+
+    public function locality(): string
+    {
+        return $this->_addressLocality;
+    }
+
+    public function region(): string
+    {
+        return $this->_addressRegion;
+    }
+
+    public function postalCode(): string
+    {
+        return $this->_postalCode;
+    }
 }
