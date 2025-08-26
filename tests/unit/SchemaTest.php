@@ -2,6 +2,7 @@
 
 namespace Clubdeuce\Schema\tests\unit;
 
+use Clubdeuce\Schema\Offer;
 use Clubdeuce\Schema\Person;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -10,6 +11,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 
 #[UsesClass(Person::class)]
+#[UsesClass(Offer::class)]
 #[CoversClass(Schema::class)]
 class SchemaTest extends TestCase
 {
@@ -45,5 +47,23 @@ class SchemaTest extends TestCase
         $this->assertEquals('A famous symphony composed by Beethoven', $composition->description());
         $this->assertEquals('http://example.com/symphony.jpg', $composition->image_url());
         $this->assertEquals('http://example.com/symphony', $composition->url());
+    }
+
+    public function testMakeMusicEventPassesDataToMusicEvent()
+    {
+        $data = [
+            'name' => 'Jazz Night',
+            'description' => 'A night of smooth jazz music',
+            'image_url' => 'http://example.com/jazznight.jpg',
+            'url' => 'http://example.com/jazznight',
+        ];
+
+        $schema = new Schema();
+        $musicEvent = $schema->makeMusicEvent($data);
+
+        $this->assertEquals('Jazz Night', $musicEvent->name());
+        $this->assertEquals('A night of smooth jazz music', $musicEvent->description());
+        $this->assertEquals('http://example.com/jazznight.jpg', $musicEvent->image_url());
+        $this->assertEquals('http://example.com/jazznight', $musicEvent->url());
     }
 }

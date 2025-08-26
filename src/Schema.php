@@ -12,4 +12,9 @@ class Schema
     {
         return new MusicComposition($data);
     }
+
+    public function makeMusicEvent(array $data = []): MusicEvent
+    {
+        return new MusicEvent($data);
+    }
 }
