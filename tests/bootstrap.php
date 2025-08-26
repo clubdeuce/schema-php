@@ -1,9 +1,13 @@
 <?php
+// PHPUnit bootstrap for this project
+// Loads Composer autoloader and the custom base test class
 
-define('SRC_DIR', dirname(__DIR__) . '/src');
-define('VENDOR_DIRECTORY', dirname(__DIR__) . '/vendor');
+$composerAutoload = __DIR__ . '/../vendor/autoload.php';
+if (file_exists($composerAutoload)) {
+    require $composerAutoload;
+}
 
-if(file_exists(VENDOR_DIRECTORY . '/autoload.php'))
-    require VENDOR_DIRECTORY . '/autoload.php';
-
-require 'includes/testCase.php';
+$testCasePath = __DIR__ . '/includes/testCase.php';
+if (file_exists($testCasePath)) {
+    require $testCasePath;
+}
