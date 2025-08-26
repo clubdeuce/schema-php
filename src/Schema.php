@@ -7,4 +7,9 @@ class Schema
     {
         return new Person($data);
     }
+
+    public function makeMusicComposition(array $data = []): MusicComposition
+    {
+        return new MusicComposition($data);
+    }
 }
