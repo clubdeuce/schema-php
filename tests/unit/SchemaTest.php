@@ -2,12 +2,14 @@
 
 namespace Clubdeuce\Schema\tests\unit;
 
+use Clubdeuce\Schema\Person;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Clubdeuce\Schema\Schema;
-use Clubdeuce\Schema\Person;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 
+#[UsesClass(Person::class)]
 #[CoversClass(Schema::class)]
 class SchemaTest extends TestCase
 {
