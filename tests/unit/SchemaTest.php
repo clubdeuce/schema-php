@@ -159,4 +159,25 @@ class SchemaTest extends TestCase
         $this->assertEquals('10022', $place->address()->postalCode());
         $this->assertEquals('USA', $place->address()->addressCountry());
     }
+
+    public function testMakePostalAddressPassesDataToPostalAddress()
+    {
+        $data = [
+            'streetAddress' => '123 Postal Avenue',
+            'addressLocality' => 'Postal Town',
+            'addressRegion' => 'PS',
+            'postalCode' => '54321',
+            'addressCountry' => 'Postland'
+        ];
+
+        $schema = new Schema();
+        $postalAddress = $schema->makePostalAddress($data);
+
+        $this->assertInstanceOf(PostalAddress::class, $postalAddress);
+        $this->assertEquals('123 Postal Avenue', $postalAddress->streetAddress());
+        $this->assertEquals('Postal Town', $postalAddress->addressLocality());
+        $this->assertEquals('PS', $postalAddress->addressRegion());
+        $this->assertEquals('54321', $postalAddress->postalCode());
+        $this->assertEquals('Postland', $postalAddress->addressCountry());
+    }
 }

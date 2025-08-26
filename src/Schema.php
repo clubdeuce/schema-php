@@ -32,4 +32,9 @@ class Schema
     {
         return new Place($data);
     }
+
+    public function makePostalAddress(array $data = []): PostalAddress
+    {
+        return new PostalAddress($data);
+    }
 }
