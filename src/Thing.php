@@ -18,7 +18,7 @@ class Thing
 
     public function __construct(array $args = [])
     {
-        $this->_set_state($args);
+        $this->set_state($args);
     }
 
     public function description(): string
@@ -144,7 +144,7 @@ class Thing
         return null;
     }
 
-    protected function _set_state(array $args = [])
+    protected function set_state(array $args = []): void
     {
         foreach ($args as $key => $value) {
             if (property_exists($this, $key)) {
