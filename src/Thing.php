@@ -107,7 +107,7 @@ class Thing
      */
     public function __call(string $method, array $args = array())
     {
-        $msg = sprintf('Magic methods are deprceated. Please implement %2$s::%1$s.', $method, static::class);
+        $msg = sprintf('Magic methods are deprecated. Please implement %2$s::%1$s.', $method, static::class);
         trigger_error($msg);
 
         if (preg_match('#^set_(.*?)$#', $method, $matches)) {
