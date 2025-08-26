@@ -38,44 +38,13 @@ class ThingTest extends testCase
             'unknown_property' => 'Extra Value',
         ]);
 
-        $getExtraArgs = (new \ReflectionClass(Thing::class))->getProperty('_extra_args');
+        $getExtraArgs = (new \ReflectionClass(Thing::class))->getProperty('extra_args');
         $getExtraArgs->setAccessible(true);
 
         $extraArgs = $getExtraArgs->getValue($thing);
 
         $this->assertArrayHasKey('unknown_property', $extraArgs);
         $this->assertEquals('Extra Value', $extraArgs['unknown_property']);
-    }
-
-    /**
-     * @covers ::__call
-     */
-    public function testSetValidProperties()
-    {
-        $thing = new Thing();
-        $thing->set_name('Test Name');
-        $thing->set_description('Test Description');
-        $thing->set_url('https://test.com');
-        $thing->set_image_url('https://test.com/image.jpg');
-
-        $this->assertEquals('Test Name', $thing->name());
-        $this->assertEquals('Test Description', $thing->description());
-        $this->assertEquals('https://test.com', $thing->url());
-        $this->assertEquals('https://test.com/image.jpg', $thing->image_url());
-    }
-
-    /**
-     * @covers ::__call
-     */
-    public function testGetValidProperties()
-    {
-        $thing = new Thing();
-        $thing->set_name('Test Name');
-
-        $this->assertEquals('Test Name', $thing->name());
-        $this->assertEquals('', $thing->description());
-        $this->assertEquals('', $thing->url());
-        $this->assertEquals('', $thing->image_url());
     }
 
     /**

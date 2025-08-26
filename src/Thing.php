@@ -147,9 +147,8 @@ class Thing
     protected function _set_state(array $args = [])
     {
         foreach ($args as $key => $value) {
-            $name = "_{$key}";
-            if (property_exists($this, $name)) {
-                $this->{$name} = $value;
+            if (property_exists($this, $key)) {
+                $this->{$key} = $value;
                 continue;
             }
 
