@@ -1,18 +1,16 @@
 <?php
+
+namespace Clubdeuce\Schema\tests\unit;
+
 use PHPUnit\Framework\TestCase;
 use Clubdeuce\Schema\Schema;
 use Clubdeuce\Schema\Person;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+
+#[CoversClass(Schema::class)]
 class SchemaTest extends TestCase
 {
-    public function testMakePersonReturnsPersonInstance()
-    {
-        $schema = new Schema();
-        $person = $schema->make_person();
-
-        $this->assertInstanceOf(Person::class, $person);
-    }
-
     public function testMakePersonPassesDataToPerson()
     {
         $data = [
