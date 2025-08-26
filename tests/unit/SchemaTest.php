@@ -66,4 +66,28 @@ class SchemaTest extends TestCase
         $this->assertEquals('http://example.com/jazznight.jpg', $musicEvent->image_url());
         $this->assertEquals('http://example.com/jazznight', $musicEvent->url());
     }
+
+    public function testMakeOfferPassesDataToOffer()
+    {
+        $data = [
+            'name' => 'Special Discount Offer',
+            'description' => 'An exclusive discount offer for a limited time',
+            'image_url' => 'http://example.com/offer.jpg',
+            'url' => 'http://example.com/offer',
+            'price' => 99.99,
+            'priceCurrency' => 'USD'
+        ];
+
+        $schema = new Schema();
+        $offer = $schema->makeOffer($data);
+
+        $this->assertEquals('Special Discount Offer', $offer->name());
+        $this->assertEquals('An exclusive discount offer for a limited time', $offer->description());
+        $this->assertEquals('http://example.com/offer.jpg', $offer->image_url());
+        $this->assertEquals('http://example.com/offer', $offer->url());
+        $this->assertEquals(99.99, $offer->price());
+        $this->assertEquals('USD', $offer->priceCurrency());
+    }
+
+
 }

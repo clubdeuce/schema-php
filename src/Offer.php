@@ -9,16 +9,16 @@ namespace Clubdeuce\Schema;
  */
 class Offer extends Thing
 {
-    protected float $_price = 0;
+    protected float $price = 0;
 
-    protected string $_priceCurrency = 'USD';
+    protected string $priceCurrency = 'USD';
 
     /**
      * @link https://schema.org/price
      */
     public function setPrice(float $price): void
     {
-        $this->_price = $price;
+        $this->price = $price;
     }
 
     /**
@@ -26,18 +26,28 @@ class Offer extends Thing
      */
     public function setPriceCurrency(string $currency): void
     {
-        $this->_priceCurrency = $currency;
+        $this->priceCurrency = $currency;
     }
 
     public function schema(): array
     {
         $schema = array(
             '@type'         => 'Offer',
-            'price'         => $this->_price,
-            'priceCurrency' => $this->_priceCurrency
+            'price'         => $this->price,
+            'priceCurrency' => $this->priceCurrency
         );
 
         return array_filter(array_merge(parent::schema(), $schema));
+    }
+
+    public function price(): float
+    {
+        return $this->price;
+    }
+
+    public function priceCurrency(): string
+    {
+        return $this->priceCurrency;
     }
 
 }

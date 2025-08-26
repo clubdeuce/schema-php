@@ -17,4 +17,9 @@ class Schema
     {
         return new MusicEvent($data);
     }
+
+    public function makeOffer(array $data = []): Offer
+    {
+        return new Offer($data);
+    }
 }
