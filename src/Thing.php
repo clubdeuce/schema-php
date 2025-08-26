@@ -107,8 +107,8 @@ class Thing
      */
     public function __call(string $method, array $args = array())
     {
-
-        trigger_error(sprintf('Magic methods are decrecated: %1$s %2$s', $method, __CLASS__));
+        $msg = sprintf('Magic methods are deprceated. Please implement %2$s::%1$s.', $method, static::class);
+        trigger_error($msg);
 
         if (preg_match('#^set_(.*?)$#', $method, $matches)) {
             if (property_exists($this, $property = "_{$matches[1]}")) {
