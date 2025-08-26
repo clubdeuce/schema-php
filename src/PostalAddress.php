@@ -10,32 +10,32 @@ namespace Clubdeuce\Schema;
  */
 class PostalAddress extends Thing
 {
-    protected string $_addressCountry = '';
+    protected string $addressCountry = '';
 
     /**
      * City in the US
      */
-    protected string $_addressLocality = '';
+    protected string $addressLocality = '';
 
     /**
      * State in the US
      */
-    protected string $_addressRegion = '';
+    protected string $addressRegion = '';
 
-    protected string $_postalCode = '';
+    protected string $postalCode = '';
 
-    protected string $_streetAddress = '';
+    protected string $streetAddress = '';
 
     public function schema(): array
     {
         $schema = array(
             '@type'           => 'PostalAddress',
-            'addressCountry'  => $this->_addressCountry,
-            'addressLocality' => $this->_addressLocality,
-            'addressRegion'   => $this->_addressRegion,
+            'addressCountry'  => $this->addressCountry,
+            'addressLocality' => $this->addressLocality,
+            'addressRegion'   => $this->addressRegion,
             'name'            => $this->name,
-            'postalCode'      => $this->_postalCode,
-            'streetAddress'   => $this->_streetAddress,
+            'postalCode'      => $this->postalCode,
+            'streetAddress'   => $this->streetAddress,
         );
 
         $schema = array_merge(parent::schema(), $schema);
@@ -45,51 +45,51 @@ class PostalAddress extends Thing
 
     public function setStreetAddress(string $address) : void
     {
-        $this->_streetAddress = $address;
+        $this->streetAddress = $address;
     }
 
     public function setAddressCountry(string $country): void
     {
-        $this->_addressCountry = $country;
+        $this->addressCountry = $country;
     }
 
     public function setAddressLocality(string $locality): void
     {
-        $this->_addressLocality = $locality;
+        $this->addressLocality = $locality;
     }
 
     public function setAddressRegion(string $region): void
     {
-        $this->_addressRegion = $region;
+        $this->addressRegion = $region;
     }
 
     public function setPostalCode(string $postalCode): void
     {
-        $this->_postalCode = $postalCode;
+        $this->postalCode = $postalCode;
     }
 
     public function streetAddress(): string
     {
-        return $this->_streetAddress;
+        return $this->streetAddress;
     }
 
-    public function country(): string
+    public function addressCountry(): string
     {
-        return $this->_addressCountry;
+        return $this->addressCountry;
     }
 
-    public function locality(): string
+    public function addressLocality(): string
     {
-        return $this->_addressLocality;
+        return $this->addressLocality;
     }
 
-    public function region(): string
+    public function addressRegion(): string
     {
-        return $this->_addressRegion;
+        return $this->addressRegion;
     }
 
     public function postalCode(): string
     {
-        return $this->_postalCode;
+        return $this->postalCode;
     }
 }
