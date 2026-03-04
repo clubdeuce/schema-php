@@ -10,9 +10,9 @@ class Person extends Thing {
      */
     public function schema() : array {
 
-        $schema = array_merge( parent::schema(), array(
+        $schema = array_merge( parent::schema(), [
             '@type' => 'Person',
-        ) );
+        ] );
 
         return $schema;
 

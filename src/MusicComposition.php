@@ -36,11 +36,11 @@ class MusicComposition extends Thing
      */
     function schema(): array
     {
-        return array_filter(array_merge(parent::schema(), array(
+        return array_filter(array_merge(parent::schema(), [
             '@type'                => 'MusicComposition',
             'composer'             => isset($this->composer) ? $this->composer->schema() : null,
             'lyricist'             => isset($this->lyricist) ? $this->lyricist->schema() : null,
             'musicCompositionForm' => $this->form,
-        )));
+        ]));
     }
 }

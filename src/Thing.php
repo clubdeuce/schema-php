@@ -10,7 +10,7 @@ namespace Clubdeuce\Schema;
 class Thing
 {
     protected string $description = '';
-    protected array $extraArgs = array();
+    protected array $extraArgs = [];
 
     protected string $imageUrl = '';
     protected string $name = '';
@@ -87,14 +87,14 @@ class Thing
      */
     public function schema(): array
     {
-        $schema = array_filter(array(
+        $schema = array_filter([
             '@context' => 'https://schema.org',
             '@type' => 'Thing',
             'description' => $this->description(),
             'image' => $this->imageUrl(),
             'name' => $this->name(),
             'url' => $this->url(),
-        ));
+        ]);
 
         return $schema;
     }

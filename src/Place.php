@@ -20,10 +20,10 @@ class Place extends Thing
 
     public function schema(): array
     {
-        $schema = array_merge(parent::schema(), array(
+        $schema = array_merge(parent::schema(), [
             '@type' => 'Place',
             'address' => $this->address?->schema(),
-        ));
+        ]);
 
         return array_filter($schema);
     }

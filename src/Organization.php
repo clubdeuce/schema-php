@@ -28,11 +28,11 @@ class Organization extends Thing
 
     public function schema(): array
     {
-        $schema = array_merge(parent::schema(), array(
+        $schema = array_merge(parent::schema(), [
             '@type'     => 'Organization',
             'address'   => $this->address()?->schema(),
             'telephone' => $this->telephone(),
-        ));
+        ]);
 
         return array_filter($schema);
     }

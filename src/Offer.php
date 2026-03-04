@@ -31,11 +31,11 @@ class Offer extends Thing
 
     public function schema(): array
     {
-        $schema = array(
+        $schema = [
             '@type'         => 'Offer',
             'price'         => $this->price,
             'priceCurrency' => $this->priceCurrency
-        );
+        ];
 
         return array_filter(array_merge(parent::schema(), $schema), fn($v) => $v !== null && $v !== '');
     }

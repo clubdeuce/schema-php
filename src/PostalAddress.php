@@ -28,7 +28,7 @@ class PostalAddress extends Thing
 
     public function schema(): array
     {
-        $schema = array(
+        $schema = [
             '@type'           => 'PostalAddress',
             'addressCountry'  => $this->addressCountry,
             'addressLocality' => $this->addressLocality,
@@ -36,7 +36,7 @@ class PostalAddress extends Thing
             'name'            => $this->name,
             'postalCode'      => $this->postalCode,
             'streetAddress'   => $this->streetAddress,
-        );
+        ];
 
         $schema = array_merge(parent::schema(), $schema);
 
