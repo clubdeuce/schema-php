@@ -1,4 +1,7 @@
 # Schema PHP
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/clubdeuce/schema-php/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/clubdeuce/schema-php/?branch=main)
+[![Code Coverage](https://scrutinizer-ci.com/g/clubdeuce/schema-php/badges/coverage.png?b=main)](https://scrutinizer-ci.com/g/clubdeuce/schema-php/?branch=main)
+[![Build Status](https://scrutinizer-ci.com/g/clubdeuce/schema-php/badges/build.png?b=main)](https://scrutinizer-ci.com/g/clubdeuce/schema-php/build-status/main)
 
 A library to generate schema.org JSON-LD.
 
