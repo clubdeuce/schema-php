@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-03-04
+
+### Added
+- `Event`: no-prefix canonical getters matching `Thing`'s style — `directors()`, `doorTime()`, `duration()`, `endDate()`, `eventStatus()`, `offers()`, `place()`, `performers()`, `sponsors()`, `organizers()`
+- `Thing::resolvePostalAddress(array $args): array` — protected static helper for converting an `address` array to a `PostalAddress` instance
+
+### Changed
+- `Thing::getSchema()` now accepts an array directly (`getSchema(array $items): array`) instead of a property name string, removing fragile dynamic property dispatch; all callers in `Event` and `MusicEvent` updated
+- `Event::endDate()` side-effect mutation removed; computation extracted into a private `resolveEndDate()` helper; `getEndDate()` and `schema()` are now consistent
+- `Organization` and `Place` constructors delegate address conversion to `Thing::resolvePostalAddress()` (DRY)
+- `MusicComposition::$composer` and `$lyricist` changed from uninitialized `Person` to `?Person = null`; `schema()` updated to use null-safe `?->schema()`
+
+### Deprecated
+- `Event::getDirectors()`, `getDoorTime()`, `getDuration()`, `getEndDate()`, `getEventStatus()`, `getOffers()`, `getPlace()`, `getPerformers()`, `getSponsors()`, `getOrganizers()` — use the no-prefix equivalents instead
+
 ## [0.1.0] - 2026-03-04
 
 ### Added
@@ -46,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Basic `schema()` method returning a `@context`/`@type` array
 - MIT license
 
-[Unreleased]: https://github.com/clubdeuce/schema-php/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/clubdeuce/schema-php/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/clubdeuce/schema-php/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/clubdeuce/schema-php/compare/0.0.1...0.1.0
 [0.0.1]: https://github.com/clubdeuce/schema-php/releases/tag/0.0.1
