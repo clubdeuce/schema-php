@@ -103,15 +103,13 @@ class Thing
         return $schema;
     }
 
-    protected function getSchema(string $propertyName): array
+    protected function getSchema(array $items): array
     {
         $schema = [];
 
-        if (property_exists($this, $propertyName)) {
-            foreach ($this->{$propertyName} as $item) {
-                /** @var Thing $item */
-                $schema[] = $item->schema();
-            }
+        foreach ($items as $item) {
+            /** @var Thing $item */
+            $schema[] = $item->schema();
         }
 
         return $schema;
@@ -127,5 +125,14 @@ class Thing
 
             $this->extraArgs[$key] = $value;
         }
+    }
+
+    protected static function resolvePostalAddress(array $args): array
+    {
+        if (isset($args['address']) && is_array($args['address'])) {
+            $args['address'] = new PostalAddress($args['address']);
+        }
+
+        return $args;
     }
 }

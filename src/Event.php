@@ -98,16 +98,16 @@ class Event extends Thing {
 
         $schema = [
             '@type'       => 'Event',
-            'directors'   => $this->getSchema( 'directors' ),
+            'directors'   => $this->getSchema( $this->directors ),
             'doorTime'    => $this->doorTime()?->format( DATE_ATOM ),
-            'endDate'     => $this->endDate()?->format( DATE_ATOM ),
+            'endDate'     => $this->resolveEndDate()?->format( DATE_ATOM ),
             'duration'    => isset( $this->duration ) ? $this->duration->format( 'P%yY%mM%dDT%hH%iM%sS' ) : null,
             'eventStatus' => $this->eventStatus,
             'location'    => $this->place?->schema(),
-            'offers'      => $this->getSchema( 'offers' ),
-            'organizers'  => $this->getSchema( 'organizers' ),
-            'performers'  => $this->getSchema( 'performers' ),
-            'sponsors'    => $this->getSchema( 'sponsors' ),
+            'offers'      => $this->getSchema( $this->offers ),
+            'organizers'  => $this->getSchema( $this->organizers ),
+            'performers'  => $this->getSchema( $this->performers ),
+            'sponsors'    => $this->getSchema( $this->sponsors ),
             'startDate'   => isset( $this->startDate ) ? $this->startDate()->format( DATE_ATOM ) : null,
         ];
 
@@ -117,123 +117,91 @@ class Event extends Thing {
 
     }
 
-    protected function doorTime(): ?DateTime {
 
-        $doorTime = null;
-
-        if ( $this->doorTime ) {
-            $doorTime = $this->doorTime;
+    private function resolveEndDate(): ?DateTime
+    {
+        if ($this->endDate !== null) {
+            return $this->endDate;
         }
 
-        return $doorTime;
-
-    }
-
-    protected function endDate(): ?DateTime {
-
-        if ( ! isset( $this->endDate ) ) {
-            if ( isset( $this->duration ) ) {
-                $this->endDate = ( clone $this->startDate() )->add( $this->duration );
-            }
+        if ($this->duration !== null && $this->startDate !== null) {
+            return (clone $this->startDate)->add($this->duration);
         }
 
-        return $this->endDate;
-
+        return null;
     }
 
     // Getters
-    /**
-     * @return Person[]
-     */
-    public function getDirectors(): array {
+    /** @return Person[] */
+    public function directors(): array {
         return $this->directors;
     }
 
-    /**
-     * Get door time.
-     *
-     * @return DateTime|null
-     */
-    public function getDoorTime(): ?DateTime {
+    public function doorTime(): ?DateTime {
         return $this->doorTime;
     }
 
-    /**
-     * Get duration.
-     *
-     * @return DateInterval|null
-     */
-    public function getDuration(): ?DateInterval {
+    public function duration(): ?DateInterval {
         return $this->duration;
     }
 
-    /**
-     * Get end date.
-     *
-     * @return DateTime|null
-     */
-    public function getEndDate(): ?DateTime {
-        return $this->endDate ?? null;
+    public function endDate(): ?DateTime {
+        return $this->resolveEndDate();
     }
 
-    /**
-     * Get event status.
-     *
-     * @return string
-     */
-    public function getEventStatus(): string {
+    public function eventStatus(): string {
         return $this->eventStatus;
     }
 
-    /**
-     * Get offers.
-     *
-     * @return Offer[]
-     */
-    public function getOffers(): array {
+    /** @return Offer[] */
+    public function offers(): array {
         return $this->offers;
     }
 
-    /**
-     * Get place.
-     *
-     * @return Place|null
-     */
-    public function getPlace(): ?Place {
+    public function place(): ?Place {
         return $this->place;
     }
 
-    /**
-     * Get performers.
-     *
-     * @return array
-     */
-    public function getPerformers(): array {
+    /** @return Person[]|Organization[] */
+    public function performers(): array {
         return $this->performers;
     }
 
-    /**
-     * @return array
-     */
-    public function getSponsors(): array {
+    /** @return Person[]|Organization[] */
+    public function sponsors(): array {
         return $this->sponsors;
     }
 
-    /**
-     * @return Person[]|Organization[]
-     */
-    public function getOrganizers(): array {
+    /** @return Person[]|Organization[] */
+    public function organizers(): array {
         return $this->organizers;
     }
 
-    /**
-     * Get start date.
-     *
-     * @return DateTime|null
-     */
     public function startDate(): ?DateTime {
         return $this->startDate ?? null;
     }
+
+    // Deprecated get* aliases — use the no-prefix getters above instead
+    /** @deprecated Use directors() */
+    public function getDirectors(): array { return $this->directors(); }
+    /** @deprecated Use doorTime() */
+    public function getDoorTime(): ?DateTime { return $this->doorTime(); }
+    /** @deprecated Use duration() */
+    public function getDuration(): ?DateInterval { return $this->duration(); }
+    /** @deprecated Use endDate() */
+    public function getEndDate(): ?DateTime { return $this->endDate(); }
+    /** @deprecated Use eventStatus() */
+    public function getEventStatus(): string { return $this->eventStatus(); }
+    /** @deprecated Use offers() */
+    public function getOffers(): array { return $this->offers(); }
+    /** @deprecated Use place() */
+    public function getPlace(): ?Place { return $this->place(); }
+    /** @deprecated Use performers() */
+    public function getPerformers(): array { return $this->performers(); }
+    /** @deprecated Use sponsors() */
+    public function getSponsors(): array { return $this->sponsors(); }
+    /** @deprecated Use organizers() */
+    public function getOrganizers(): array { return $this->organizers(); }
 
     // Setters
     /**

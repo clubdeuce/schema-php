@@ -25,7 +25,7 @@ class MusicEvent extends Event
     {
         return array_filter(array_merge(parent::schema(), [
             '@type'     => 'MusicEvent',
-            'composers' => $this->getSchema('composers'),
+            'composers' => $this->getSchema($this->composers),
         ]));
     }
 }

@@ -7,14 +7,14 @@ namespace Clubdeuce\Schema;
  */
 class MusicComposition extends Thing
 {
-    protected Person $composer;
+    protected ?Person $composer = null;
 
     /**
      * The musical form, e.g., sonata, symphony, overture, etc.
      */
     protected string $form = '';
 
-    protected Person $lyricist;
+    protected ?Person $lyricist = null;
 
     public function setComposer(Person $composer): static
     {
@@ -41,8 +41,8 @@ class MusicComposition extends Thing
     {
         return array_filter(array_merge(parent::schema(), [
             '@type'                => 'MusicComposition',
-            'composer'             => isset($this->composer) ? $this->composer->schema() : null,
-            'lyricist'             => isset($this->lyricist) ? $this->lyricist->schema() : null,
+            'composer'             => $this->composer?->schema(),
+            'lyricist'             => $this->lyricist?->schema(),
             'musicCompositionForm' => $this->form,
         ]));
     }

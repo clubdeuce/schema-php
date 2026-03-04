@@ -14,11 +14,7 @@ class Organization extends Thing
 
     public function __construct(array $args = [])
     {
-        if(isset($args['address']) && is_array($args['address'])) {
-            $args['address'] = new PostalAddress($args['address']);
-        }
-
-        parent::__construct($args);
+        parent::__construct(static::resolvePostalAddress($args));
     }
 
     public function address(): ?PostalAddress
