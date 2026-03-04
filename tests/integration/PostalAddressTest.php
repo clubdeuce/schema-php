@@ -32,4 +32,41 @@ class PostalAddressTest extends testCase
         $this->assertEquals('NY', $schema['addressRegion']);
         $this->assertEquals('10001', $schema['postalCode']);
     }
+
+    public function testGetters(): void
+    {
+        $address = new PostalAddress();
+        $address->setStreetAddress('10 Getter St');
+        $address->setAddressLocality('Gettertown');
+        $address->setAddressRegion('GT');
+        $address->setAddressCountry('GX');
+        $address->setPostalCode('99999');
+
+        $this->assertEquals('10 Getter St', $address->streetAddress());
+        $this->assertEquals('Gettertown', $address->addressLocality());
+        $this->assertEquals('GT', $address->addressRegion());
+        $this->assertEquals('GX', $address->addressCountry());
+        $this->assertEquals('99999', $address->postalCode());
+    }
+
+    public function testEmptyAddressSchemaFiltersEmptyValues(): void
+    {
+        $schema = (new PostalAddress())->schema();
+
+        $this->assertArrayNotHasKey('streetAddress', $schema);
+        $this->assertArrayNotHasKey('addressLocality', $schema);
+        $this->assertArrayNotHasKey('addressRegion', $schema);
+        $this->assertArrayNotHasKey('addressCountry', $schema);
+        $this->assertArrayNotHasKey('postalCode', $schema);
+    }
+
+    public function testFluentSettersReturnSameInstance(): void
+    {
+        $address = new PostalAddress();
+        $this->assertSame($address, $address->setStreetAddress('1 St'));
+        $this->assertSame($address, $address->setAddressLocality('City'));
+        $this->assertSame($address, $address->setAddressRegion('ST'));
+        $this->assertSame($address, $address->setAddressCountry('US'));
+        $this->assertSame($address, $address->setPostalCode('12345'));
+    }
 }

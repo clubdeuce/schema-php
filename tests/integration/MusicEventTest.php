@@ -62,4 +62,16 @@ class MusicEventTest extends testCase
         $this->assertEquals('Acme, Inc', $schema['sponsors'][0]['name']);
         $this->assertEquals(19.95, $schema['offers'][0]['price']);
     }
+
+    public function testEmptyComposersAbsentFromSchema(): void
+    {
+        $schema = (new MusicEvent())->schema();
+        $this->assertArrayNotHasKey('composers', $schema);
+    }
+
+    public function testFluentAddComposerReturnsSameInstance(): void
+    {
+        $event = new MusicEvent();
+        $this->assertSame($event, $event->addComposer(new Person()));
+    }
 }

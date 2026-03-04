@@ -31,4 +31,46 @@ class PlaceTest extends testCase
         $this->assertArrayHasKey('addressRegion', $schema['address']);
         $this->assertArrayHasKey('addressCountry', $schema['address']);
     }
+
+    public function testSchemaTypeIsPlace(): void
+    {
+        $this->assertEquals('Place', (new Place())->schema()['@type']);
+    }
+
+    public function testAddressGetterReturnsNullByDefault(): void
+    {
+        $this->assertNull((new Place())->address());
+    }
+
+    public function testAddressGetterReturnsSetValue(): void
+    {
+        $address = new PostalAddress(['streetAddress' => '1 Test St']);
+        $place   = new Place();
+        $place->setAddress($address);
+
+        $this->assertSame($address, $place->address());
+    }
+
+    public function testSchemaWithoutAddressHasNoAddressKey(): void
+    {
+        $schema = (new Place())->schema();
+        $this->assertArrayNotHasKey('address', $schema);
+    }
+
+    public function testConstructorWithArrayAddressCreatesPostalAddress(): void
+    {
+        $place = new Place([
+            'address' => ['streetAddress' => '5 Array Lane', 'addressLocality' => 'Testburg'],
+        ]);
+
+        $this->assertInstanceOf(PostalAddress::class, $place->address());
+        $this->assertEquals('5 Array Lane', $place->address()->streetAddress());
+    }
+
+    public function testFluentSetAddressReturnsSameInstance(): void
+    {
+        $place   = new Place();
+        $address = new PostalAddress();
+        $this->assertSame($place, $place->setAddress($address));
+    }
 }

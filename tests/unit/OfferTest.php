@@ -40,4 +40,37 @@ class OfferTest extends testCase
         $schema = $this->offer->schema();
         $this->assertEquals('GBP', $schema['priceCurrency']);
     }
+
+    public function testPriceGetter(): void
+    {
+        $this->assertEquals(0.0, $this->offer->price());
+        $this->offer->setPrice(49.99);
+        $this->assertEquals(49.99, $this->offer->price());
+    }
+
+    public function testPriceCurrencyGetter(): void
+    {
+        $this->assertEquals('USD', $this->offer->priceCurrency());
+        $this->offer->setPriceCurrency('EUR');
+        $this->assertEquals('EUR', $this->offer->priceCurrency());
+    }
+
+    public function testPriceZeroRemainsInSchema(): void
+    {
+        // price defaults to 0; array_filter must NOT remove it
+        $schema = $this->offer->schema();
+        $this->assertArrayHasKey('price', $schema);
+        $this->assertSame(0.0, $schema['price']);
+    }
+
+    public function testSchemaTypeIsOffer(): void
+    {
+        $this->assertEquals('Offer', $this->offer->schema()['@type']);
+    }
+
+    public function testFluentSettersReturnSameInstance(): void
+    {
+        $this->assertSame($this->offer, $this->offer->setPrice(10.0));
+        $this->assertSame($this->offer, $this->offer->setPriceCurrency('CAD'));
+    }
 }

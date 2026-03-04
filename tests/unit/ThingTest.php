@@ -187,9 +187,39 @@ class ThingTest extends testCase
 
 
     
-    /**
-     * Helper method to extract JSON content from script tag
-     */
+    public function testDescriptionGetter(): void
+    {
+        $thing = new Thing();
+        $this->assertEquals('', $thing->description());
+        $thing->setDescription('Hello');
+        $this->assertEquals('Hello', $thing->description());
+    }
+
+    public function testImageUrlGetter(): void
+    {
+        $thing = new Thing();
+        $this->assertEquals('', $thing->imageUrl());
+        $thing->setImageUrl('https://example.com/img.jpg');
+        $this->assertEquals('https://example.com/img.jpg', $thing->imageUrl());
+    }
+
+    public function testUrlGetter(): void
+    {
+        $thing = new Thing();
+        $this->assertEquals('', $thing->url());
+        $thing->setUrl('https://example.com');
+        $this->assertEquals('https://example.com', $thing->url());
+    }
+
+    public function testFluentSettersReturnSameInstance(): void
+    {
+        $thing = new Thing();
+        $this->assertSame($thing, $thing->setName('Test'));
+        $this->assertSame($thing, $thing->setDescription('Desc'));
+        $this->assertSame($thing, $thing->setUrl('https://example.com'));
+        $this->assertSame($thing, $thing->setImageUrl('https://example.com/img.jpg'));
+    }
+
     /**
      * Helper method to extract JSON content from script tag
      */
@@ -198,6 +228,4 @@ class ThingTest extends testCase
         preg_match('/<script type="application\/ld\+json">(.*?)<\/script>/', $scriptTag, $matches);
         return $matches[1] ?? '';
     }
-    
-    
 }
