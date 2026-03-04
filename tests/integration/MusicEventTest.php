@@ -19,13 +19,13 @@ class MusicEventTest extends testCase
     public function testSchema()
     {
         $composer = new Person();
-        $composer->set_name('Joseph Doe');
+        $composer->setName('Joseph Doe');
         $director = new Person();
-        $director->set_name('John Doe');
+        $director->setName('John Doe');
         $performer = new Person();
-        $performer->set_name('Jane Doe');
+        $performer->setName('Jane Doe');
         $sponsor = new Organization();
-        $sponsor->set_name('Acme, Inc');
+        $sponsor->setName('Acme, Inc');
         $offer = new Offer();
         $offer->setPrice(19.95);
 

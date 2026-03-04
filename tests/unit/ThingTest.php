@@ -18,13 +18,13 @@ class ThingTest extends testCase
             'name'        => 'Updated Name',
             'description' => 'Updated Description',
             'url'         => 'https://updated-url.com',
-            'image_url'   => 'https://updated-url.com/image.jpg',
+            'imageUrl'   => 'https://updated-url.com/image.jpg',
         ]);
 
         $this->assertEquals('Updated Name', $thing->name());
         $this->assertEquals('Updated Description', $thing->description());
         $this->assertEquals('https://updated-url.com', $thing->url());
-        $this->assertEquals('https://updated-url.com/image.jpg', $thing->image_url());
+        $this->assertEquals('https://updated-url.com/image.jpg', $thing->imageUrl());
     }
 
     /**
@@ -38,7 +38,7 @@ class ThingTest extends testCase
             'unknown_property' => 'Extra Value',
         ]);
 
-        $getExtraArgs = (new \ReflectionClass(Thing::class))->getProperty('extra_args');
+        $getExtraArgs = (new \ReflectionClass(Thing::class))->getProperty('extraArgs');
         $getExtraArgs->setAccessible(true);
 
         $extraArgs = $getExtraArgs->getValue($thing);
@@ -95,10 +95,10 @@ class ThingTest extends testCase
     public function testLdJsonWithAllProperties()
     {
         $thing = new Thing();
-        $thing->set_name('Test Thing');
-        $thing->set_description('A test description');
-        $thing->set_url('https://example.com');
-        $thing->set_image_url('https://example.com/image.jpg');
+        $thing->setName('Test Thing');
+        $thing->setDescription('A test description');
+        $thing->setUrl('https://example.com');
+        $thing->setImageUrl('https://example.com/image.jpg');
         
         $result = $thing->ldJson();
         
@@ -125,8 +125,8 @@ class ThingTest extends testCase
     public function testLdJsonWithPartialProperties()
     {
         $thing = new Thing();
-        $thing->set_name('Partial Thing');
-        $thing->set_url('https://example.com');
+        $thing->setName('Partial Thing');
+        $thing->setUrl('https://example.com');
         
         $result = $thing->ldJson();
         
@@ -151,8 +151,8 @@ class ThingTest extends testCase
     public function testLdJsonReturnsValidJson()
     {
         $thing = new Thing();
-        $thing->set_name('JSON Test');
-        $thing->set_description('Testing JSON validity');
+        $thing->setName('JSON Test');
+        $thing->setDescription('Testing JSON validity');
         
         $result = $thing->ldJson();
         $json = $this->extractJsonFromScript($result);
@@ -174,8 +174,8 @@ class ThingTest extends testCase
     public function testLdJsonHandlesSpecialCharacters()
     {
         $thing = new Thing();
-        $thing->set_name('Special "Quotes" & Ampersands');
-        $thing->set_description('Description with <html> tags & "quotes"');
+        $thing->setName('Special "Quotes" & Ampersands');
+        $thing->setDescription('Description with <html> tags & "quotes"');
         
         $result = $thing->ldJson();
         $json = $this->extractJsonFromScript($result);

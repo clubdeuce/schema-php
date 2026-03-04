@@ -10,15 +10,15 @@ namespace Clubdeuce\Schema;
 class Thing
 {
     protected string $description = '';
-    protected array $extra_args = array();
+    protected array $extraArgs = array();
 
-    protected string $image_url = '';
+    protected string $imageUrl = '';
     protected string $name = '';
     protected string $url = '';
 
     public function __construct(array $args = [])
     {
-        $this->set_state($args);
+        $this->setState($args);
     }
 
     public function description(): string
@@ -26,22 +26,22 @@ class Thing
         return $this->description;
     }
 
-    public function set_description(string $description): void
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    public function image_url(): string
+    public function imageUrl(): string
     {
-        return $this->image_url;
+        return $this->imageUrl;
     }
 
     /**
      * Set the image URL
      */
-    public function set_image_url(string $url): void
+    public function setImageUrl(string $url): void
     {
-        $this->image_url = $url;
+        $this->imageUrl = $url;
     }
 
     /**
@@ -55,7 +55,7 @@ class Thing
     /**
      * Set the name
      */
-    public function set_name(string $name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -65,7 +65,7 @@ class Thing
         return $this->url;
     }
 
-    public function set_url(string $url): void
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
@@ -91,7 +91,7 @@ class Thing
             '@context' => 'https://schema.org',
             '@type' => 'Thing',
             'description' => $this->description(),
-            'image' => $this->image_url(),
+            'image' => $this->imageUrl(),
             'name' => $this->name(),
             'url' => $this->url(),
         ));
@@ -144,7 +144,7 @@ class Thing
         return null;
     }
 
-    protected function set_state(array $args = []): void
+    protected function setState(array $args = []): void
     {
         foreach ($args as $key => $value) {
             if (property_exists($this, $key)) {
@@ -152,7 +152,7 @@ class Thing
                 continue;
             }
 
-            $this->extra_args[$key] = $value;
+            $this->extraArgs[$key] = $value;
         }
     }
 }

@@ -10,73 +10,73 @@ class MusicEvent extends Thing
     /**
      * @var Person[]
      */
-    protected array $_composers = array();
+    protected array $composers = array();
 
     /**
      * @var Person[]
      */
-    protected array $_directors = array();
+    protected array $directors = array();
 
-    protected ?DateTime $_doorTime = null;
+    protected ?DateTime $doorTime = null;
 
-    protected ?DateInterval $_duration = null;
+    protected ?DateInterval $duration = null;
 
-    protected ?DateTime $_endDate = null;
+    protected ?DateTime $endDate = null;
 
-    protected string $_eventStatus = 'EventScheduled';
+    protected string $eventStatus = 'EventScheduled';
 
     /**
      * @var Offer[]
      */
-    protected array $_offers = array();
+    protected array $offers = array();
 
-    protected ?Place $_place = null;
+    protected ?Place $place = null;
 
     /**
      * @var Person[]|Organization[]
      */
-    protected array $_performers = array();
+    protected array $performers = array();
 
     /**
      * @var Organization[]
      */
-    protected array $_sponsors = array();
+    protected array $sponsors = array();
 
-    protected ?DateTime $_startDate = null;
+    protected ?DateTime $startDate = null;
 
     public function addComposer($person): int
     {
-        $this->_composers[] = $person;
-        return count($this->_composers);
+        $this->composers[] = $person;
+        return count($this->composers);
     }
 
     public function addDirector($person): int
     {
-        $this->_directors[] = $person;
-        return count($this->_directors);
+        $this->directors[] = $person;
+        return count($this->directors);
     }
 
     public function addOffer($offer): int
     {
-        $this->_offers[] = $offer;
-        return count($this->_offers);
+        $this->offers[] = $offer;
+        return count($this->offers);
     }
 
     public function addPerformer($performer): int
     {
-        $this->_performers[] = $performer;
-        return count($this->_performers);
+        $this->performers[] = $performer;
+        return count($this->performers);
     }
 
     public function addSponsor($sponsor): int
     {
-        $this->_sponsors[] = $sponsor;
-        return count($this->_sponsors);
+        $this->sponsors[] = $sponsor;
+        return count($this->sponsors);
     }
 
     public function setDoorTime(DateTime $doorTime): void
     {
-        $this->_doorTime = $doorTime;
+        $this->doorTime = $doorTime;
     }
 
     /**
@@ -87,17 +87,17 @@ class MusicEvent extends Thing
 
         $schema = array(
             '@type'       => 'MusicEvent',
-            'composers'   => $this->_getSchema('_composers'),
-            'directors'   => $this->_getSchema('_directors'),
-            'doorTime'    => $this->_doorTime?->format(DATE_ATOM),
-            'endDate'     => $this->_endDate?->format(DATE_ATOM),
-            'duration'    => $this->_duration?->format('P%yY%mM%dDT%hH%iM%sS'),
-            'eventStatus' => $this->_eventStatus,
-            'location'    => $this->_place?->schema(),
-            'offers'      => $this->_getSchema('_offers'),
-            'performers'  => $this->_getSchema('_performers'),
-            'sponsors'    => $this->_getSchema('_sponsors'),
-            'startDate'   => $this->_startDate?->format(DATE_ATOM),
+            'composers'   => $this->getSchema('composers'),
+            'directors'   => $this->getSchema('directors'),
+            'doorTime'    => $this->doorTime?->format(DATE_ATOM),
+            'endDate'     => $this->endDate?->format(DATE_ATOM),
+            'duration'    => $this->duration?->format('P%yY%mM%dDT%hH%iM%sS'),
+            'eventStatus' => $this->eventStatus,
+            'location'    => $this->place?->schema(),
+            'offers'      => $this->getSchema('offers'),
+            'performers'  => $this->getSchema('performers'),
+            'sponsors'    => $this->getSchema('sponsors'),
+            'startDate'   => $this->startDate?->format(DATE_ATOM),
         );
 
         $schema = array_merge(parent::schema(), $schema);
@@ -111,7 +111,7 @@ class MusicEvent extends Thing
      *
      * @return Offer[]|Organization[]|Person[]
      */
-    protected function _getSchema(string $propertyName): array
+    protected function getSchema(string $propertyName): array
     {
 
         $schema = [];
@@ -132,13 +132,13 @@ class MusicEvent extends Thing
     /**
      * @return DateTime|null
      */
-    protected function _doorTime(): ?DateTime
+    protected function doorTime(): ?DateTime
     {
 
         $door_time = null;
 
-        if ($this->_doorTime) {
-            $door_time = $this->_doorTime;
+        if ($this->doorTime) {
+            $door_time = $this->doorTime;
         }
 
         return $door_time;
@@ -148,16 +148,16 @@ class MusicEvent extends Thing
     /**
      * @return DateTime|null
      */
-    protected function _endDate(): ?DateTime
+    protected function endDate(): ?DateTime
     {
 
-        if (!isset($this->_endDate)) {
-            if (isset($this->_duration) && !is_null($this->_startDate)) {
-                $this->_endDate = (clone $this->_startDate)->add($this->_duration);
+        if (!isset($this->endDate)) {
+            if (isset($this->duration) && !is_null($this->startDate)) {
+                $this->endDate = (clone $this->startDate)->add($this->duration);
             }
         }
 
-        return $this->_endDate;
+        return $this->endDate;
 
     }
 }

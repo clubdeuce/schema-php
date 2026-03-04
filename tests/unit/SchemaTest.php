@@ -26,7 +26,7 @@ class SchemaTest extends TestCase
         $data = [
             'name' => 'John Doe',
             'description' => 'A test person',
-            'image_url' => 'http://example.com/image.jpg'
+            'imageUrl' => 'http://example.com/image.jpg'
         ];
 
         $schema = new Schema();
@@ -34,7 +34,7 @@ class SchemaTest extends TestCase
 
         $this->assertEquals('John Doe', $person->name());
         $this->assertEquals('A test person', $person->description());
-        $this->assertEquals('http://example.com/image.jpg', $person->image_url());
+        $this->assertEquals('http://example.com/image.jpg', $person->imageUrl());
     }
 
     public function testMakeMusicCompositionPassesDataToMusicComposition()
@@ -42,7 +42,7 @@ class SchemaTest extends TestCase
         $data = [
             'name' => 'Symphony No. 5',
             'description' => 'A famous symphony composed by Beethoven',
-            'image_url' => 'http://example.com/symphony.jpg',
+            'imageUrl' => 'http://example.com/symphony.jpg',
             'url' => 'http://example.com/symphony',
         ];
 
@@ -51,7 +51,7 @@ class SchemaTest extends TestCase
 
         $this->assertEquals('Symphony No. 5', $composition->name());
         $this->assertEquals('A famous symphony composed by Beethoven', $composition->description());
-        $this->assertEquals('http://example.com/symphony.jpg', $composition->image_url());
+        $this->assertEquals('http://example.com/symphony.jpg', $composition->imageUrl());
         $this->assertEquals('http://example.com/symphony', $composition->url());
     }
 
@@ -60,7 +60,7 @@ class SchemaTest extends TestCase
         $data = [
             'name' => 'Jazz Night',
             'description' => 'A night of smooth jazz music',
-            'image_url' => 'http://example.com/jazznight.jpg',
+            'imageUrl' => 'http://example.com/jazznight.jpg',
             'url' => 'http://example.com/jazznight',
         ];
 
@@ -69,7 +69,7 @@ class SchemaTest extends TestCase
 
         $this->assertEquals('Jazz Night', $musicEvent->name());
         $this->assertEquals('A night of smooth jazz music', $musicEvent->description());
-        $this->assertEquals('http://example.com/jazznight.jpg', $musicEvent->image_url());
+        $this->assertEquals('http://example.com/jazznight.jpg', $musicEvent->imageUrl());
         $this->assertEquals('http://example.com/jazznight', $musicEvent->url());
     }
 
@@ -78,7 +78,7 @@ class SchemaTest extends TestCase
         $data = [
             'name' => 'Special Discount Offer',
             'description' => 'An exclusive discount offer for a limited time',
-            'image_url' => 'http://example.com/offer.jpg',
+            'imageUrl' => 'http://example.com/offer.jpg',
             'url' => 'http://example.com/offer',
             'price' => 99.99,
             'priceCurrency' => 'USD'
@@ -89,7 +89,7 @@ class SchemaTest extends TestCase
 
         $this->assertEquals('Special Discount Offer', $offer->name());
         $this->assertEquals('An exclusive discount offer for a limited time', $offer->description());
-        $this->assertEquals('http://example.com/offer.jpg', $offer->image_url());
+        $this->assertEquals('http://example.com/offer.jpg', $offer->imageUrl());
         $this->assertEquals('http://example.com/offer', $offer->url());
         $this->assertEquals(99.99, $offer->price());
         $this->assertEquals('USD', $offer->priceCurrency());
@@ -100,7 +100,7 @@ class SchemaTest extends TestCase
         $data = [
             'name' => 'TechCorp',
             'description' => 'A leading technology company',
-            'image_url' => 'http://example.com/logo.jpg',
+            'imageUrl' => 'http://example.com/logo.jpg',
             'url' => 'http://example.com',
             'telephone' => '123-456-7890',
             'address' => [
@@ -117,7 +117,7 @@ class SchemaTest extends TestCase
 
         $this->assertEquals('TechCorp', $organization->name());
         $this->assertEquals('A leading technology company', $organization->description());
-        $this->assertEquals('http://example.com/logo.jpg', $organization->image_url());
+        $this->assertEquals('http://example.com/logo.jpg', $organization->imageUrl());
         $this->assertEquals('http://example.com', $organization->url());
         $this->assertEquals('123-456-7890', $organization->telephone());
         $this->assertInstanceOf(PostalAddress::class, $organization->address());
@@ -134,7 +134,7 @@ class SchemaTest extends TestCase
         $data = [
             'name' => 'Central Park',
             'description' => 'A large public park in New York City.',
-            'image_url' => 'http://example.com/centralpark.jpg',
+            'imageUrl' => 'http://example.com/centralpark.jpg',
             'url' => 'http://example.com/centralpark',
             'address' => [
                 'streetAddress' => '59th to 110th St',
@@ -150,7 +150,7 @@ class SchemaTest extends TestCase
 
         $this->assertEquals('Central Park', $place->name());
         $this->assertEquals('A large public park in New York City.', $place->description());
-        $this->assertEquals('http://example.com/centralpark.jpg', $place->image_url());
+        $this->assertEquals('http://example.com/centralpark.jpg', $place->imageUrl());
         $this->assertEquals('http://example.com/centralpark', $place->url());
         $this->assertInstanceOf(PostalAddress::class, $place->address());
         $this->assertEquals('59th to 110th St', $place->address()->streetAddress());
