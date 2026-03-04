@@ -2,6 +2,7 @@
 
 namespace Clubdeuce\Schema\tests\unit;
 
+use Clubdeuce\Schema\Event;
 use Clubdeuce\Schema\Offer;
 use Clubdeuce\Schema\Organization;
 use Clubdeuce\Schema\Person;
@@ -13,6 +14,7 @@ use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 
+#[UsesClass(Event::class)]
 #[UsesClass(Person::class)]
 #[UsesClass(Offer::class)]
 #[UsesClass(Organization::class)]
@@ -179,5 +181,20 @@ class SchemaTest extends TestCase
         $this->assertEquals('PS', $postalAddress->addressRegion());
         $this->assertEquals('54321', $postalAddress->postalCode());
         $this->assertEquals('Postland', $postalAddress->addressCountry());
+    }
+
+    public function testMakeEventPassesDataToEvent(): void
+    {
+        $data = [
+            'name'        => 'Opening Night',
+            'description' => 'The first performance of the season',
+        ];
+
+        $schema = new SchemaFactory();
+        $event  = $schema->makeEvent($data);
+
+        $this->assertInstanceOf(Event::class, $event);
+        $this->assertEquals('Opening Night', $event->name());
+        $this->assertEquals('The first performance of the season', $event->description());
     }
 }

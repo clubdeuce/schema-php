@@ -3,6 +3,11 @@ namespace Clubdeuce\Schema;
 
 class SchemaFactory
 {
+    public function makeEvent(array $data = []): Event
+    {
+        return new Event($data);
+    }
+
     public function makeMusicComposition(array $data = []): MusicComposition
     {
         return new MusicComposition($data);
