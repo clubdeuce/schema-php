@@ -1,7 +1,7 @@
 <?php
 namespace Clubdeuce\Schema;
 
-class Schema
+class SchemaFactory
 {
     public function makeMusicComposition(array $data = []): MusicComposition
     {

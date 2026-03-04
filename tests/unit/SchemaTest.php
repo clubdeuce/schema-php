@@ -7,7 +7,7 @@ use Clubdeuce\Schema\Organization;
 use Clubdeuce\Schema\Person;
 use Clubdeuce\Schema\Place;
 use Clubdeuce\Schema\PostalAddress;
-use Clubdeuce\Schema\Schema;
+use Clubdeuce\Schema\SchemaFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(Organization::class)]
 #[UsesClass(Place::class)]
 #[UsesClass(PostalAddress::class)]
-#[CoversClass(Schema::class)]
+#[CoversClass(SchemaFactory::class)]
 class SchemaTest extends TestCase
 {
     public function testMakePersonPassesDataToPerson()
@@ -29,7 +29,7 @@ class SchemaTest extends TestCase
             'imageUrl' => 'http://example.com/image.jpg'
         ];
 
-        $schema = new Schema();
+        $schema = new SchemaFactory();
         $person = $schema->makePerson($data);
 
         $this->assertEquals('John Doe', $person->name());
@@ -46,7 +46,7 @@ class SchemaTest extends TestCase
             'url' => 'http://example.com/symphony',
         ];
 
-        $schema = new Schema();
+        $schema = new SchemaFactory();
         $composition = $schema->makeMusicComposition($data);
 
         $this->assertEquals('Symphony No. 5', $composition->name());
@@ -64,7 +64,7 @@ class SchemaTest extends TestCase
             'url' => 'http://example.com/jazznight',
         ];
 
-        $schema = new Schema();
+        $schema = new SchemaFactory();
         $musicEvent = $schema->makeMusicEvent($data);
 
         $this->assertEquals('Jazz Night', $musicEvent->name());
@@ -84,7 +84,7 @@ class SchemaTest extends TestCase
             'priceCurrency' => 'USD'
         ];
 
-        $schema = new Schema();
+        $schema = new SchemaFactory();
         $offer = $schema->makeOffer($data);
 
         $this->assertEquals('Special Discount Offer', $offer->name());
@@ -112,7 +112,7 @@ class SchemaTest extends TestCase
             ]
         ];
 
-        $schema = new Schema();
+        $schema = new SchemaFactory();
         $organization = $schema->makeOrganization($data);
 
         $this->assertEquals('TechCorp', $organization->name());
@@ -145,7 +145,7 @@ class SchemaTest extends TestCase
             ]
         ];
 
-        $schema = new Schema();
+        $schema = new SchemaFactory();
         $place = $schema->makePlace($data);
 
         $this->assertEquals('Central Park', $place->name());
@@ -170,7 +170,7 @@ class SchemaTest extends TestCase
             'addressCountry' => 'Postland'
         ];
 
-        $schema = new Schema();
+        $schema = new SchemaFactory();
         $postalAddress = $schema->makePostalAddress($data);
 
         $this->assertInstanceOf(PostalAddress::class, $postalAddress);
