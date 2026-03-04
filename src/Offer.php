@@ -16,17 +16,19 @@ class Offer extends Thing
     /**
      * @link https://schema.org/price
      */
-    public function setPrice(float $price): void
+    public function setPrice(float $price): static
     {
         $this->price = $price;
+        return $this;
     }
 
     /**
      * @link https://schema.org/priceCurrency
      */
-    public function setPriceCurrency(string $currency): void
+    public function setPriceCurrency(string $currency): static
     {
         $this->priceCurrency = $currency;
+        return $this;
     }
 
     public function schema(): array

@@ -26,9 +26,10 @@ class Thing
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(string $description): static
     {
         $this->description = $description;
+        return $this;
     }
 
     public function imageUrl(): string
@@ -39,9 +40,10 @@ class Thing
     /**
      * Set the image URL
      */
-    public function setImageUrl(string $url): void
+    public function setImageUrl(string $url): static
     {
         $this->imageUrl = $url;
+        return $this;
     }
 
     /**
@@ -55,9 +57,10 @@ class Thing
     /**
      * Set the name
      */
-    public function setName(string $name): void
+    public function setName(string $name): static
     {
         $this->name = $name;
+        return $this;
     }
 
     public function url(): string
@@ -65,9 +68,10 @@ class Thing
         return $this->url;
     }
 
-    public function setUrl(string $url): void
+    public function setUrl(string $url): static
     {
         $this->url = $url;
+        return $this;
     }
 
     /**

@@ -49,39 +49,45 @@ class Event extends Thing {
 
     protected ?DateTime $startDate = null;
 
-    public function addDirector( Person $person ): void {
+    public function addDirector( Person $person ): static {
 
         $this->directors[] = $person;
+        return $this;
 
     }
 
-    public function addOffer( Offer $offer ): void {
+    public function addOffer( Offer $offer ): static {
 
         $this->offers[] = $offer;
+        return $this;
 
     }
 
-    public function addOrganizer( Organization|Person $organizer ): void {
+    public function addOrganizer( Organization|Person $organizer ): static {
 
         $this->organizers[] = $organizer;
+        return $this;
 
     }
 
-    public function addPerformer( Organization|Person $performer ): void {
+    public function addPerformer( Organization|Person $performer ): static {
 
         $this->performers[] = $performer;
+        return $this;
 
     }
 
-    public function addSponsor( Organization|Person $sponsor ): void {
+    public function addSponsor( Organization|Person $sponsor ): static {
 
         $this->sponsors[] = $sponsor;
+        return $this;
 
     }
 
-    public function setDuration( DateInterval $duration ): void {
+    public function setDuration( DateInterval $duration ): static {
 
         $this->duration = $duration;
+        return $this;
 
     }
 
@@ -234,7 +240,7 @@ class Event extends Thing {
      * @param Person[]|Organization[] $organizers
      * @return self
      */
-    public function setOrganizers( array $organizers ): self {
+    public function setOrganizers( array $organizers ): static {
         $this->organizers = $organizers;
         return $this;
     }
@@ -245,7 +251,7 @@ class Event extends Thing {
      * @param Person[] $directors
      * @return self
      */
-    public function setDirectors( array $directors ): self {
+    public function setDirectors( array $directors ): static {
         $this->directors = $directors;
         return $this;
     }
@@ -256,7 +262,7 @@ class Event extends Thing {
      * @param DateTime|null $doorTime
      * @return self
      */
-    public function setDoorTime( ?DateTime $doorTime ): self {
+    public function setDoorTime( ?DateTime $doorTime ): static {
         $this->doorTime = $doorTime;
         return $this;
     }
@@ -267,7 +273,7 @@ class Event extends Thing {
      * @param DateTime|null $endDate
      * @return self
      */
-    public function setEndDate( ?DateTime $endDate ): self {
+    public function setEndDate( ?DateTime $endDate ): static {
         $this->endDate = $endDate;
         return $this;
     }
@@ -278,7 +284,7 @@ class Event extends Thing {
      * @param string $eventStatus
      * @return self
      */
-    public function setEventStatus( string $eventStatus ): self {
+    public function setEventStatus( string $eventStatus ): static {
         $this->eventStatus = $eventStatus;
         return $this;
     }
@@ -289,7 +295,7 @@ class Event extends Thing {
      * @param Offer[] $offers
      * @return self
      */
-    public function setOffers( array $offers ): self {
+    public function setOffers( array $offers ): static {
         $this->offers = $offers;
         return $this;
     }
@@ -300,7 +306,7 @@ class Event extends Thing {
      * @param Place|null $place
      * @return self
      */
-    public function setPlace( ?Place $place ): self {
+    public function setPlace( ?Place $place ): static {
         $this->place = $place;
         return $this;
     }
@@ -311,7 +317,7 @@ class Event extends Thing {
      * @param array $performers
      * @return self
      */
-    public function setPerformers( array $performers ): self {
+    public function setPerformers( array $performers ): static {
         $this->performers = $performers;
         return $this;
     }
@@ -322,7 +328,7 @@ class Event extends Thing {
      * @param array $sponsors
      * @return self
      */
-    public function setSponsors( array $sponsors ): self {
+    public function setSponsors( array $sponsors ): static {
         $this->sponsors = $sponsors;
         return $this;
     }
@@ -333,7 +339,7 @@ class Event extends Thing {
      * @param DateTime|null $startDate
      * @return self
      */
-    public function setStartDate( ?DateTime $startDate ): self {
+    public function setStartDate( ?DateTime $startDate ): static {
         $this->startDate = $startDate;
         return $this;
     }

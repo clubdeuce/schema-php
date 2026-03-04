@@ -16,19 +16,22 @@ class MusicComposition extends Thing
 
     protected Person $lyricist;
 
-    public function setComposer(Person $composer): void
+    public function setComposer(Person $composer): static
     {
         $this->composer = $composer;
+        return $this;
     }
 
-    public function setForm(string $form): void
+    public function setForm(string $form): static
     {
         $this->form = $form;
+        return $this;
     }
 
-    public function setLyricist(Person $lyricist): void
+    public function setLyricist(Person $lyricist): static
     {
         $this->lyricist = $lyricist;
+        return $this;
     }
 
     /**

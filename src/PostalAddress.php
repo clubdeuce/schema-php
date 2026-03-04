@@ -43,29 +43,34 @@ class PostalAddress extends Thing
         return array_filter($schema);
     }
 
-    public function setStreetAddress(string $address) : void
+    public function setStreetAddress(string $address) : static
     {
         $this->streetAddress = $address;
+        return $this;
     }
 
-    public function setAddressCountry(string $country): void
+    public function setAddressCountry(string $country): static
     {
         $this->addressCountry = $country;
+        return $this;
     }
 
-    public function setAddressLocality(string $locality): void
+    public function setAddressLocality(string $locality): static
     {
         $this->addressLocality = $locality;
+        return $this;
     }
 
-    public function setAddressRegion(string $region): void
+    public function setAddressRegion(string $region): static
     {
         $this->addressRegion = $region;
+        return $this;
     }
 
-    public function setPostalCode(string $postalCode): void
+    public function setPostalCode(string $postalCode): static
     {
         $this->postalCode = $postalCode;
+        return $this;
     }
 
     public function streetAddress(): string

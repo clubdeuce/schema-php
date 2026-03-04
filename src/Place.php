@@ -28,9 +28,10 @@ class Place extends Thing
         return array_filter($schema);
     }
 
-    public function setAddress(PostalAddress $address): void
+    public function setAddress(PostalAddress $address): static
     {
         $this->address = $address;
+        return $this;
     }
 
     public function address(): ?PostalAddress

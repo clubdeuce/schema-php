@@ -12,9 +12,10 @@ class MusicEvent extends Event
      */
     protected array $composers = [];
 
-    public function addComposer(Person $person): void
+    public function addComposer(Person $person): static
     {
         $this->composers[] = $person;
+        return $this;
     }
 
     /**
