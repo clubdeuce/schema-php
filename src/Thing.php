@@ -76,7 +76,7 @@ class Thing
     public function ldJson(): string
     {
         if ($schema = $this->schema()) {
-            return sprintf('<script type="application/ld+json">%1$s</script>', json_encode(array_filter($schema)));
+            return sprintf('<script type="application/ld+json">%1$s</script>', json_encode($schema));
         }
 
         return '';
@@ -99,49 +99,18 @@ class Thing
         return $schema;
     }
 
-    /**
-     * @param string $method
-     * @param array $args
-     *
-     * @return mixed|null
-     */
-    public function __call(string $method, array $args = array())
+    protected function getSchema(string $propertyName): array
     {
-        $msg = sprintf('Magic methods are deprecated. Please implement %2$s::%1$s.', $method, static::class);
-        trigger_error($msg);
+        $schema = [];
 
-        if (preg_match('#^set_(.*?)$#', $method, $matches)) {
-            if (property_exists($this, $property = "_{$matches[1]}")) {
-                $this->{$property} = $args[0];
-                return $args[0];
+        if (property_exists($this, $propertyName)) {
+            foreach ($this->{$propertyName} as $item) {
+                /** @var Thing $item */
+                $schema[] = $item->schema();
             }
         }
 
-        if (preg_match('#^add([A-Z].*?)$#', $method, $matches)) {
-            $property = '_' . lcfirst($matches[1]);
-            if (property_exists($this, $property)) {
-                if (is_array($this->{$property})) {
-                    foreach ($args as $param) {
-                        $this->{$property}[] = $param;
-                    }
-                    return count($this->{$property});
-                }
-
-                trigger_error(sprintf('The %1$s method expects %4$s::%2$s to be an array, while it is %3$s', $method, $property, gettype($args), __CLASS__));
-                return null;
-            }
-        }
-
-        if (!isset($property)) {
-            $property = "_{$method}";
-        }
-
-        if (property_exists($this, $property)) {
-            return $this->{$property};
-        }
-
-        trigger_error(sprintf('There is no property named %1$s in %2$s.', $property, __CLASS__));
-        return null;
+        return $schema;
     }
 
     protected function setState(array $args = []): void

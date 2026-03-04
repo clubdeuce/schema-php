@@ -13,20 +13,15 @@ use DateTime;
 class Event extends Thing {
 
     /**
-     * @var Person[]|Organization[]
-     */
-    protected array $organizers = [];
-
-    /**
      * @var Person[]
      */
     protected array $directors = [];
 
-    protected ?DateTime $doorTime;
+    protected ?DateTime $doorTime = null;
 
-    protected ?DateInterval $duration;
+    protected ?DateInterval $duration = null;
 
-    protected DateTime $endDate;
+    protected ?DateTime $endDate = null;
 
     protected string $eventStatus = 'EventScheduled';
 
@@ -34,6 +29,11 @@ class Event extends Thing {
      * @var Offer[]
      */
     protected array $offers = [];
+
+    /**
+     * @var Person[]|Organization[]
+     */
+    protected array $organizers = [];
 
     protected ?Place $place = null;
 
@@ -47,71 +47,59 @@ class Event extends Thing {
      */
     protected array $sponsors = [];
 
-    /**
-     * @var Person[]|Organization[]
-     */
-    protected array $organizer = [];
+    protected ?DateTime $startDate = null;
 
-    protected DateTime $startDate;
-
-    function addComposer( Person $person ): void {
-
-        $this->organizers[] = $person;
-
-    }
-
-    function addDirector( Person $person ): void {
+    public function addDirector( Person $person ): void {
 
         $this->directors[] = $person;
 
     }
 
-    function addOffer( Offer $offer ): void {
+    public function addOffer( Offer $offer ): void {
 
         $this->offers[] = $offer;
 
     }
 
-    function addPerformer( Organization|Person $performer ): void {
+    public function addOrganizer( Organization|Person $organizer ): void {
+
+        $this->organizers[] = $organizer;
+
+    }
+
+    public function addPerformer( Organization|Person $performer ): void {
 
         $this->performers[] = $performer;
 
     }
 
-    function addSponsor( Organization|Person $sponsor ): void {
+    public function addSponsor( Organization|Person $sponsor ): void {
 
         $this->sponsors[] = $sponsor;
 
     }
 
-    function setDuration( DateInterval $duration ): void {
+    public function setDuration( DateInterval $duration ): void {
 
         $this->duration = $duration;
 
     }
 
     /**
-     * @return Person[]|Organization[]
-     */
-    function organizer(): array {
-
-        return $this->organizer;
-
-    }
-
-    /**
      * @return string[]
      */
-    function schema(): array {
+    public function schema(): array {
 
         $schema = [
             '@type'       => 'Event',
-            'doorTime'    => isset( $this->doorTime ) ? $this->doorTime()->format( DATE_ATOM ) : null,
-            'endDate'     => isset( $this->endDate ) ? $this->endDate()->format( DATE_ATOM ) : null,
+            'directors'   => $this->getSchema( 'directors' ),
+            'doorTime'    => $this->doorTime()?->format( DATE_ATOM ),
+            'endDate'     => $this->endDate()?->format( DATE_ATOM ),
             'duration'    => isset( $this->duration ) ? $this->duration->format( 'P%yY%mM%dDT%hH%iM%sS' ) : null,
             'eventStatus' => $this->eventStatus,
             'location'    => $this->place?->schema(),
             'offers'      => $this->getSchema( 'offers' ),
+            'organizers'  => $this->getSchema( 'organizers' ),
             'performers'  => $this->getSchema( 'performers' ),
             'sponsors'    => $this->getSchema( 'sponsors' ),
             'startDate'   => isset( $this->startDate ) ? $this->startDate()->format( DATE_ATOM ) : null,
@@ -149,17 +137,6 @@ class Event extends Thing {
 
     // Getters
     /**
-     * Get composers.
-     *
-     * @return Person[]
-     */
-    public function getOrganizers(): array {
-        return $this->organizers;
-    }
-
-    /**
-     * Get directors.
-     *
      * @return Person[]
      */
     public function getDirectors(): array {
@@ -230,8 +207,6 @@ class Event extends Thing {
     }
 
     /**
-     * Get sponsors.
-     *
      * @return array
      */
     public function getSponsors(): array {
@@ -239,12 +214,10 @@ class Event extends Thing {
     }
 
     /**
-     * Get organizer.
-     *
-     * @return array
+     * @return Person[]|Organization[]
      */
-    public function getOrganizer(): array {
-        return $this->organizer;
+    public function getOrganizers(): array {
+        return $this->organizers;
     }
 
     /**
@@ -256,15 +229,13 @@ class Event extends Thing {
         return $this->startDate ?? null;
     }
 
-    // Setters`
+    // Setters
     /**
-     * Set composers.
-     *
-     * @param Person[] $composers
+     * @param Person[]|Organization[] $organizers
      * @return self
      */
-    public function setOrganizers(array $composers ): self {
-        $this->organizers = $composers;
+    public function setOrganizers( array $organizers ): self {
+        $this->organizers = $organizers;
         return $this;
     }
 
@@ -357,17 +328,6 @@ class Event extends Thing {
     }
 
     /**
-     * Add an event organizer.
-     *
-     * @param array $organizer
-     * @return self
-     */
-    public function addOrganizer( $organizer ): self {
-        $this->organizer[] = $organizer;
-        return $this;
-    }
-
-    /**
      * Set start date.
      *
      * @param DateTime|null $startDate
@@ -376,27 +336,5 @@ class Event extends Thing {
     public function setStartDate( ?DateTime $startDate ): self {
         $this->startDate = $startDate;
         return $this;
-    }
-
-    /**
-     * @param string $propertyName
-     *
-     * @return array
-     */
-    protected function getSchema( string $propertyName ): array {
-
-        $schema = [];
-
-        if ( property_exists( $this, $propertyName ) ) {
-            foreach ( $this->{$propertyName} as $item ) {
-                /**
-                 * @var Thing $item
-                 */
-                $schema[] = $item->schema();
-            }
-        }
-
-        return $schema;
-
     }
 }

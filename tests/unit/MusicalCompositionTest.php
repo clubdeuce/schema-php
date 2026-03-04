@@ -14,7 +14,12 @@ class MusicalCompositionTest extends testCase
 
         $this->assertIsArray($schema);
         $this->assertArrayHasKey('@type', $schema);
-        $this->assertArrayHasKey('musicCompositionForm', $schema);
         $this->assertEquals('MusicComposition', $schema['@type']);
+        $this->assertArrayNotHasKey('musicCompositionForm', $schema);
+
+        $composition->setForm('Sonata');
+        $schema = $composition->schema();
+        $this->assertArrayHasKey('musicCompositionForm', $schema);
+        $this->assertEquals('Sonata', $schema['musicCompositionForm']);
     }
 }

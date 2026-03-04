@@ -37,7 +37,7 @@ class Offer extends Thing
             'priceCurrency' => $this->priceCurrency
         );
 
-        return array_filter(array_merge(parent::schema(), $schema));
+        return array_filter(array_merge(parent::schema(), $schema), fn($v) => $v !== null && $v !== '');
     }
 
     public function price(): float

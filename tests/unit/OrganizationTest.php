@@ -15,8 +15,8 @@ class OrganizationTest extends testCase
 
         $this->assertIsArray($schema);
         $this->assertArrayHasKey('@type', $schema);
-        $this->assertArrayHasKey('telephone', $schema);
-        $this->assertArrayHasKey('address', $schema);
         $this->assertEquals('Organization', $schema['@type']);
+        $this->assertArrayNotHasKey('telephone', $schema);
+        $this->assertArrayNotHasKey('address', $schema);
     }
 }

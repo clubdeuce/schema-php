@@ -33,7 +33,7 @@ class Place extends Thing
         $this->address = $address;
     }
 
-    public function address(): PostalAddress
+    public function address(): ?PostalAddress
     {
         return $this->address;
     }

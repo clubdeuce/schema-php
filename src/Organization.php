@@ -34,7 +34,7 @@ class Organization extends Thing
             'telephone' => $this->telephone(),
         ));
 
-        return $schema;
+        return array_filter($schema);
     }
 
     public function telephone(): string

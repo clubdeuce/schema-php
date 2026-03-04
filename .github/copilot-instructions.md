@@ -38,12 +38,20 @@ Complex types (e.g., `Organization`) auto-convert nested array args to proper su
 **`array_filter()` on schema output:** Empty strings, nulls, and empty arrays are stripped automatically. Do not add null-guard logic in properties — let `array_filter()` handle it in `schema()`.
 
 **Adding a new schema type:**
-1. Create `src/NewType.php` extending `Thing` (or another type)
-2. Override `schema()` merging parent result and setting `@type`
+1. Create `src/NewType.php` extending `Thing` (or a more specific type, e.g. `Event`)
+2. Override `schema()` merging parent result and setting `@type`; call `array_filter()` on the return value
 3. Add a `makeNewType()` factory method to `Schema`
 4. Create `tests/unit/NewTypeTest.php` extending `Clubdeuce\Schema\Tests\testCase`
 5. Add `#[CoversClass(NewType::class)]` attribute — coverage metadata is **required** (PHPUnit will fail without it)
 
+**`getSchema(string $propertyName): array` helper on `Thing`:** Used to map an array property of schema objects to their `schema()` arrays. Call it in subclass `schema()` methods for any array of `Thing` subclasses (e.g. `$this->getSchema('performers')`).
+
+**`array_filter()` on schema output:** Empty strings, nulls, and empty arrays are stripped automatically. Use a custom callback `fn($v) => $v !== null && $v !== ''` when the value may legitimately be `0` or `false` (e.g. `Offer::price`).
+
+**Property initialization:** All nullable `?DateTime`/`?DateInterval` properties must be initialized to `= null`. Uninitialized typed properties throw at runtime in PHP 8.x.
+
 **Test base class:** Tests extend `Clubdeuce\Schema\Tests\testCase` (in `tests/includes/testCase.php`), which provides `reflectionMethodInvoke()` for testing protected methods.
 
-**PHPUnit config strictness:** `phpunit.xml.dist` has `requireCoverageMetadata="true"`, `failOnRisky="true"`, `failOnWarning="true"`. Every test class needs a `#[CoversClass(...)]` attribute.
+ `phpunit.xml.dist` has `requireCoverageMetadata="true"`, `failOnRisky="true"`, `failOnWarning="true"`. Every test class needs a `#[CoversClass(...)]` attribute.
+
+**`MusicEvent extends Event`:** `MusicEvent` only adds `$composers` and overrides `schema()` to set `@type=MusicEvent` and include `composers`. All other event behavior (performers, sponsors, offers, dates, etc.) is inherited from `Event`.
