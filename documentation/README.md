@@ -12,6 +12,9 @@
   * [Event](#event)
   * [MusicEvent](#musicevent)
   * [MusicComposition](#musiccomposition)
+  * [CreativeWork](#creativework)
+  * [TheaterEvent](#theaterevent)
+  * [EventSeries](#eventseries)
 
 ## Installation
 
@@ -158,7 +161,7 @@ Represents an event. Extends `Thing`.
 
 **`SchemaFactory` method:** *(use `MusicEvent` or instantiate `Event` directly)*
 
-**Additional properties:** `startDate`, `endDate`, `doorTime`, `duration` (`DateInterval`), `eventStatus`, `place` (`Place`), `performers`, `organizers`, `sponsors`, `directors`, `offers`
+**Additional properties:** `startDate`, `endDate`, `doorTime`, `duration` (`DateInterval`), `eventStatus`, `place` (`Place`), `performers`, `organizers`, `sponsors`, `directors`, `offers`, `subEvents`
 
 **Methods:**
 - `setStartDate(DateTime $date)`, `setEndDate(DateTime $date)`, `setDoorTime(DateTime $time)`
@@ -168,6 +171,7 @@ Represents an event. Extends `Thing`.
 - `addPerformer(Organization|Person $performer)`, `addOrganizer(Organization|Person $organizer)`
 - `addSponsor(Organization|Person $sponsor)`, `addDirector(Person $person)`
 - `addOffer(Offer $offer)`
+- `addSubEvent(Event $event)`, `setSubEvents(array $subEvents)` — nest child events (e.g. individual performances under a run, or productions under a season)
 
 ### MusicEvent
 
@@ -200,4 +204,58 @@ Represents a musical work. Extends `Thing`.
 $composition = $factory->makeMusicComposition(['name' => 'Symphony No. 5']);
 $composition->setComposer($factory->makePerson(['name' => 'Ludwig van Beethoven']));
 $composition->setForm('Symphony');
+```
+
+### CreativeWork
+
+Represents a creative work (play, book, script, etc). Extends `Thing`.
+
+**`SchemaFactory` method:** `makeCreativeWork(array $data = [])`
+
+**Additional properties:** `authors` (array of `Person`, serialized as `author`)
+
+**Methods:** `addAuthor(Person $person)`, `setAuthors(array $authors)`
+
+```php
+$work = $factory->makeCreativeWork(['name' => 'Hamlet']);
+$work->addAuthor($factory->makePerson(['name' => 'William Shakespeare']));
+```
+
+### TheaterEvent
+
+Represents a theatrical performance. Extends `Event`.
+
+**`SchemaFactory` method:** `makeTheaterEvent(array $data = [])`
+
+Inherits all `Event` properties, including `subEvents` for representing
+individual performances of a run. Adds `worksPerformed` (array of
+`CreativeWork`, serialized as `workPerformed`) — a `TheaterEvent` can
+perform more than one work, e.g. a one-act festival evening or a concert
+program with several pieces.
+
+**Methods:** `addWorkPerformed(CreativeWork $work)`, `setWorksPerformed(array $worksPerformed)`
+
+```php
+$event = $factory->makeTheaterEvent(['name' => 'One-Act Festival']);
+$event->addWorkPerformed($factory->makeCreativeWork(['name' => 'Trifles']));
+$event->addWorkPerformed($factory->makeCreativeWork(['name' => 'The Stronger']));
+$event->addPerformer($factory->makePerson(['name' => 'Jane Doe']));
+
+$matinee = $factory->makeTheaterEvent(['name' => 'One-Act Festival']);
+$matinee->setStartDate(new DateTime('2026-06-01T14:00:00'));
+$event->addSubEvent($matinee);
+```
+
+### EventSeries
+
+Represents a series of related events (e.g. a theatrical season). Extends `Event`.
+
+**`SchemaFactory` method:** `makeEventSeries(array $data = [])`
+
+Inherits all `Event` properties. Use `addSubEvent()`/`setSubEvents()` (inherited
+from `Event`) to list the events that make up the series.
+
+```php
+$season = $factory->makeEventSeries(['name' => '2026 Season']);
+$season->addSubEvent($factory->makeTheaterEvent(['name' => 'Hamlet']));
 ```

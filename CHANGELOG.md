@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `TheaterEvent` class extending `Event` — schema.org `TheaterEvent`, adds `worksPerformed` (array of `CreativeWork`, serialized as `workPerformed`) to support multi-work programs such as one-act festivals or concert programs with several pieces
+- `EventSeries` class extending `Event` — schema.org `EventSeries`, for grouping related events (e.g. a theatrical season) via the new `subEvents` support
+- `CreativeWork` class extending `Thing` — schema.org `CreativeWork`, with `authors` (array of `Person`, serialized as `author`)
+- `Event::$subEvents` — `addSubEvent(Event $event)`, `setSubEvents(array $subEvents)`, `subEvents(): array`, included in `schema()` as `subEvents`
+- `SchemaFactory::makeTheaterEvent()`, `SchemaFactory::makeEventSeries()`, `SchemaFactory::makeCreativeWork()`
+
 ## [0.2.0] - 2026-03-04
 
 ### Added

@@ -435,4 +435,56 @@ class EventTest extends testCase
 
         $this->assertEquals('Organization', $schema['organizers'][0]['@type']);
     }
+
+    // --- Sub events ---
+
+    public function testSubEventsAbsentFromSchemaWhenNotSet(): void
+    {
+        $schema = (new Event())->schema();
+        $this->assertArrayNotHasKey('subEvents', $schema);
+    }
+
+    public function testGetSubEventsReturnsAddedSubEvents(): void
+    {
+        $sub   = new Event();
+        $event = new Event();
+        $event->addSubEvent($sub);
+
+        $this->assertCount(1, $event->subEvents());
+        $this->assertSame($sub, $event->subEvents()[0]);
+    }
+
+    public function testSetSubEventsReplacesPreviousSubEvents(): void
+    {
+        $a     = new Event();
+        $b     = new Event();
+        $event = new Event();
+        $event->addSubEvent($a);
+        $event->setSubEvents([$b]);
+
+        $this->assertCount(1, $event->subEvents());
+        $this->assertSame($b, $event->subEvents()[0]);
+    }
+
+    public function testSchemaWithSubEvents(): void
+    {
+        $sub = new Event();
+        $sub->setName('Matinee Performance');
+
+        $event = new Event();
+        $event->addSubEvent($sub);
+
+        $schema = $event->schema();
+
+        $this->assertArrayHasKey('subEvents', $schema);
+        $this->assertEquals('Matinee Performance', $schema['subEvents'][0]['name']);
+    }
+
+    public function testAddSubEventReturnsSameInstance(): void
+    {
+        $event = new Event();
+
+        $this->assertSame($event, $event->addSubEvent(new Event()));
+        $this->assertSame($event, $event->setSubEvents([]));
+    }
 }

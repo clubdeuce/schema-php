@@ -3,9 +3,19 @@ namespace Clubdeuce\Schema;
 
 class SchemaFactory
 {
+    public function makeCreativeWork(array $data = []): CreativeWork
+    {
+        return new CreativeWork($data);
+    }
+
     public function makeEvent(array $data = []): Event
     {
         return new Event($data);
+    }
+
+    public function makeEventSeries(array $data = []): EventSeries
+    {
+        return new EventSeries($data);
     }
 
     public function makeMusicComposition(array $data = []): MusicComposition
@@ -41,5 +51,10 @@ class SchemaFactory
     public function makePostalAddress(array $data = []): PostalAddress
     {
         return new PostalAddress($data);
+    }
+
+    public function makeTheaterEvent(array $data = []): TheaterEvent
+    {
+        return new TheaterEvent($data);
     }
 }

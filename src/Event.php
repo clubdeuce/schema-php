@@ -49,6 +49,11 @@ class Event extends Thing {
 
     protected ?DateTime $startDate = null;
 
+    /**
+     * @var Event[]
+     */
+    protected array $subEvents = [];
+
     public function addDirector( Person $person ): static {
 
         $this->directors[] = $person;
@@ -59,6 +64,13 @@ class Event extends Thing {
     public function addOffer( Offer $offer ): static {
 
         $this->offers[] = $offer;
+        return $this;
+
+    }
+
+    public function addSubEvent( Event $event ): static {
+
+        $this->subEvents[] = $event;
         return $this;
 
     }
@@ -109,6 +121,7 @@ class Event extends Thing {
             'performers'  => $this->getSchema( $this->performers ),
             'sponsors'    => $this->getSchema( $this->sponsors ),
             'startDate'   => isset( $this->startDate ) ? $this->startDate()->format( DATE_ATOM ) : null,
+            'subEvents'   => $this->getSchema( $this->subEvents ),
         ];
 
         $schema = array_merge( parent::schema(), $schema );
@@ -179,6 +192,11 @@ class Event extends Thing {
 
     public function startDate(): ?DateTime {
         return $this->startDate ?? null;
+    }
+
+    /** @return Event[] */
+    public function subEvents(): array {
+        return $this->subEvents;
     }
 
     // Deprecated get* aliases — use the no-prefix getters above instead
@@ -309,6 +327,17 @@ class Event extends Thing {
      */
     public function setStartDate( ?DateTime $startDate ): static {
         $this->startDate = $startDate;
+        return $this;
+    }
+
+    /**
+     * Set sub events.
+     *
+     * @param Event[] $subEvents
+     * @return self
+     */
+    public function setSubEvents( array $subEvents ): static {
+        $this->subEvents = $subEvents;
         return $this;
     }
 }

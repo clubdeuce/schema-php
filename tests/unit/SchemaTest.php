@@ -2,19 +2,25 @@
 
 namespace Clubdeuce\Schema\tests\unit;
 
+use Clubdeuce\Schema\CreativeWork;
 use Clubdeuce\Schema\Event;
+use Clubdeuce\Schema\EventSeries;
 use Clubdeuce\Schema\Offer;
 use Clubdeuce\Schema\Organization;
 use Clubdeuce\Schema\Person;
 use Clubdeuce\Schema\Place;
 use Clubdeuce\Schema\PostalAddress;
 use Clubdeuce\Schema\SchemaFactory;
+use Clubdeuce\Schema\TheaterEvent;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 
 #[UsesClass(Event::class)]
+#[UsesClass(EventSeries::class)]
+#[UsesClass(TheaterEvent::class)]
+#[UsesClass(CreativeWork::class)]
 #[UsesClass(Person::class)]
 #[UsesClass(Offer::class)]
 #[UsesClass(Organization::class)]
@@ -196,5 +202,50 @@ class SchemaTest extends TestCase
         $this->assertInstanceOf(Event::class, $event);
         $this->assertEquals('Opening Night', $event->name());
         $this->assertEquals('The first performance of the season', $event->description());
+    }
+
+    public function testMakeTheaterEventPassesDataToTheaterEvent(): void
+    {
+        $data = [
+            'name'        => 'Hamlet',
+            'description' => 'A tragedy by William Shakespeare',
+        ];
+
+        $schema       = new SchemaFactory();
+        $theaterEvent = $schema->makeTheaterEvent($data);
+
+        $this->assertInstanceOf(TheaterEvent::class, $theaterEvent);
+        $this->assertEquals('Hamlet', $theaterEvent->name());
+        $this->assertEquals('A tragedy by William Shakespeare', $theaterEvent->description());
+    }
+
+    public function testMakeEventSeriesPassesDataToEventSeries(): void
+    {
+        $data = [
+            'name'        => '2026 Season',
+            'description' => 'Our upcoming theatrical season',
+        ];
+
+        $schema      = new SchemaFactory();
+        $eventSeries = $schema->makeEventSeries($data);
+
+        $this->assertInstanceOf(EventSeries::class, $eventSeries);
+        $this->assertEquals('2026 Season', $eventSeries->name());
+        $this->assertEquals('Our upcoming theatrical season', $eventSeries->description());
+    }
+
+    public function testMakeCreativeWorkPassesDataToCreativeWork(): void
+    {
+        $data = [
+            'name'        => 'Hamlet',
+            'description' => 'A tragedy by William Shakespeare',
+        ];
+
+        $schema       = new SchemaFactory();
+        $creativeWork = $schema->makeCreativeWork($data);
+
+        $this->assertInstanceOf(CreativeWork::class, $creativeWork);
+        $this->assertEquals('Hamlet', $creativeWork->name());
+        $this->assertEquals('A tragedy by William Shakespeare', $creativeWork->description());
     }
 }
