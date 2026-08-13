@@ -12,11 +12,6 @@ use DateTime;
  */
 class Event extends Thing {
 
-    /**
-     * @var Person[]
-     */
-    protected array $directors = [];
-
     protected ?DateTime $doorTime = null;
 
     protected ?DateInterval $duration = null;
@@ -24,6 +19,12 @@ class Event extends Thing {
     protected ?DateTime $endDate = null;
 
     protected string $eventStatus = 'EventScheduled';
+    protected ?DateTime $startDate = null;
+
+    /**
+     * @var Person[]
+     */
+    protected array $directors = [];
 
     /**
      * @var Offer[]
@@ -35,6 +36,9 @@ class Event extends Thing {
      */
     protected array $organizers = [];
 
+    /**
+     * @var Place|null
+     */
     protected ?Place $place = null;
 
     /**
@@ -47,12 +51,24 @@ class Event extends Thing {
      */
     protected array $sponsors = [];
 
-    protected ?DateTime $startDate = null;
+    /**
+     * @var Person[]|Organization[]
+     */
+    protected array $composers = [];
 
     /**
      * @var Event[]
      */
     protected array $subEvents = [];
+
+    /**
+     * Add a composer.
+     */
+    public function addComposer(Person $person): static
+    {
+        $this->composers[] = $person;
+        return $this;
+    }
 
     public function addDirector( Person $person ): static {
 
@@ -190,6 +206,13 @@ class Event extends Thing {
         return $this->organizers;
     }
 
+    /**
+     * @return Person[]|Organization[]
+     */
+    public function composers(): array {
+        return $this->composers;
+    }
+
     public function startDate(): ?DateTime {
         return $this->startDate ?? null;
     }
@@ -198,6 +221,7 @@ class Event extends Thing {
     public function subEvents(): array {
         return $this->subEvents;
     }
+
 
     // Deprecated get* aliases — use the no-prefix getters above instead
     /** @deprecated Use directors() */

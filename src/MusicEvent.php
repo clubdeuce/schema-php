@@ -12,11 +12,10 @@ class MusicEvent extends Event
      */
     protected array $composers = [];
 
-    public function addComposer(Person $person): static
-    {
-        $this->composers[] = $person;
-        return $this;
-    }
+    /**
+     * @var CreativeWork[]
+     */
+    protected array $worksPerformed = [];
 
     /**
      * @return string[]|array[]
@@ -27,5 +26,21 @@ class MusicEvent extends Event
             '@type'     => 'MusicEvent',
             'composers' => $this->getSchema($this->composers),
         ]));
+    }
+
+    /** @return CreativeWork[] */
+    public function worksPerformed(): array {
+        return $this->worksPerformed;
+    }
+
+    /**
+     * Set the works performed.
+     *
+     * @param CreativeWork[] $worksPerformed
+     * @return self
+     */
+    public function setWorksPerformed( array $worksPerformed ): static {
+        $this->worksPerformed = $worksPerformed;
+        return $this;
     }
 }
