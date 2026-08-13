@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-08-13
+
 ### Added
 - `TheaterEvent` class extending `Event` — schema.org `TheaterEvent`, adds `worksPerformed` (array of `CreativeWork`, serialized as `workPerformed`) to support multi-work programs such as one-act festivals or concert programs with several pieces
 - `EventSeries` class extending `Event` — schema.org `EventSeries`, for grouping related events (e.g. a theatrical season) via the new `subEvents` support
@@ -68,7 +70,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Basic `schema()` method returning a `@context`/`@type` array
 - MIT license
 
-[Unreleased]: https://github.com/clubdeuce/schema-php/compare/0.2.0...HEAD
+[Unreleased]: https://github.com/clubdeuce/schema-php/compare/0.3.0...HEAD
+[0.3.0]: https://github.com/clubdeuce/schema-php/compare/0.2.0...0.3.0
 [0.2.0]: https://github.com/clubdeuce/schema-php/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/clubdeuce/schema-php/compare/0.0.1...0.1.0
 [0.0.1]: https://github.com/clubdeuce/schema-php/releases/tag/0.0.1
